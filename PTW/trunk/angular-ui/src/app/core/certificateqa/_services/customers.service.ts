@@ -1,14 +1,16 @@
 // Angular
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 // RxJS
 import { Observable } from 'rxjs';
 // CRUD
 import { HttpUtilsService, QueryParamsModel, QueryResultsModel } from '../../_base/crud';
 // Models
 import { CustomerModel } from '../_models/certificateqa.model';
+import { environment } from '../../../../environments/environment';
 
 const API_CUSTOMERS_URL = 'api/customers';
+const API_ALL_CERTIFICATE_URL =  `${environment.baseUrl}certificate`;
 
 @Injectable()
 export class CustomersService {
@@ -73,5 +75,12 @@ export class CustomersService {
 		const httpHeaders = this.httpUtils.getHTTPHeaders();
 		const body = { customerIdsForDelete: ids };
 		return this.http.put<QueryResultsModel>(url, body, { headers: httpHeaders} );
+	}
+
+	getAllCertificate(){
+		debugger;
+		let headers: HttpHeaders = new HttpHeaders();
+        headers.set('Content-Type', 'application/json');
+		return this.http.get<CustomerModel[]>(API_ALL_CERTIFICATE_URL + '/CertificateAll',{ headers: headers});
 	}
 }

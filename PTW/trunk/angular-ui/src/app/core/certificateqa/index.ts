@@ -26,6 +26,7 @@ export {
     OneCustomerDeleted,
     ManyCustomersDeleted,
     CustomersPageRequested,
+    CertificatePageRequested,
     CustomersPageLoaded,
     CustomersPageCancelled,
     CustomersPageToggleLoading

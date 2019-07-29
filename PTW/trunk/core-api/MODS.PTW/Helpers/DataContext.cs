@@ -2,7 +2,7 @@
 using Microsoft.IdentityModel.Protocols;
 using System.Configuration;
 using MODS.PTW.Models;
-
+using MODS.PTW.Dtos;
 
 namespace MODS.PTW.Helpers
 {
@@ -27,12 +27,21 @@ namespace MODS.PTW.Helpers
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            base.OnModelCreating(builder);
+
             builder.Entity<Company>()
                 .HasKey(c => c.ID);
             builder.Entity<Company>()
                 .HasOne(c => c.companyCatagories)
                .WithMany(cc => cc.companies)
                .HasForeignKey(c => c.CategoryID);
+
+            builder.Entity<PrecautionQA>()
+                .HasKey(p => p.ID);
+            builder.Entity<PrecautionQA>()
+                .HasOne(p => p.precautionType)
+                .WithMany(pt => pt.precautions)
+                .HasForeignKey(p => p.PrecautionTypeID);
 
             builder.Entity<Equipment>()
                 .HasKey(eq => eq.ID);
@@ -51,34 +60,32 @@ namespace MODS.PTW.Helpers
                 .HasOne(bc => bc.Type)
                 .WithMany(c => c.Questions)
                 .HasForeignKey(bc => bc.TypeID);
+
+            //certificates realted 
+
+            builder.Entity<Certificate>()
+                .HasKey(c => c.ID);
+
+            builder.Entity<Question>()
+                .HasKey(c => c.ID);
+
+            builder.Entity<CertificateQuestion>()
+                .HasKey(bc => new { bc.QuestionID, bc.CertificateID });
+
+            builder.Entity<CertificateQuestion>()
+                 .HasOne(bc => bc.Certificate)
+                 .WithMany(b => b.CertificateQuestions)
+                 .HasForeignKey(bc => bc.CertificateID);
+
+            builder.Entity<CertificateQuestion>()
+                .HasOne(bc => bc.Question)
+                .WithMany(c => c.CertificateQuestions)
+                .HasForeignKey(bc => bc.QuestionID);
+
         }
 
-        /* builder.Entity<UserRole>()
-            .HasIndex(u => new { u.RoleId, u.UserId })
-            .IsUnique();
-         builder.Entity<Role>()
-           .HasIndex(u => u.Name)
-           .IsUnique();
-         builder.Entity<User>()
-             .HasIndex(u => u.Email)
-             .IsUnique();
-         builder.Entity<User>()
-            .HasIndex(u => u.Username)
-            .IsUnique();
-
-         //seed data
-         builder.Entity<Role>().HasData(
-             new Role() { Id = 1, Name = "Administrator" },
-             new Role() { Id = 2, Name = "User" }
-         );*/
-
-
-
-        //public DbSet<User> Users { get; set; }
-        // public DbSet<Role> Roles { get; set; }
-        // public DbSet<UserRole> UserRoles { get; set; }
         public DbSet<Questionnarie> questionnaries { get; set; }
-        public DbSet<Media> Media { get; set; }       
+        public DbSet<Media> Media { get; set; }
         public DbSet<WorkPermitStatus> WorkPermitStatus { get; set; }
         public DbSet<WorkPermitTypes> WorkPermitTypes { get; set; }
         public DbSet<UserAuthority> UserAuthorities { get; set; }
@@ -92,9 +99,14 @@ namespace MODS.PTW.Helpers
         public DbSet<PTWQuestion> PTWSelectionQA { get; set; }
         public DbSet<PTWType> PTWType { get; set; }
         public DbSet<PTWQuestionTypeAns> PTWQuestionTypeAns { get; set; }
-        public DbSet<Certificate> Certificate { get; set; }
-        public DbSet<CertificateAuthority> CertificateAuthority { get; set; }
-        public DbSet<CertificateQA> CertificateQA { get; set; }
+        public DbSet<PrecautionQA> PrecautionQA { get; set; }
+        public DbSet<PrecautionType> PrecautionType { get; set; }
+        public DbSet<Fwbs> FWBS { get; set; }
 
+        //certificates 
+        public DbSet<Certificate> Certificates { get; set; }
+        public DbSet<CertificateAuthority> CertificateAuthority { get; set; }
+        public DbSet<Question> Questions { get; set; }
+        public DbSet<CertificateQuestion> CertificateQuestions { get; set; }
     }
 }

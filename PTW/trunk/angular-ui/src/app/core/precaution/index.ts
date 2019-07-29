@@ -9,7 +9,7 @@ export { PrecautionQAModel } from './_models/precaution.model';
 export { SPECIFICATIONS_DICTIONARY } from './_consts/specification.dictionary';
 
 // DataSources
-export { CustomersDataSource } from './_data-sources/precaution.datasource';
+export { PrecautionQADataSource } from './_data-sources/precaution.datasource';
 
 
 
@@ -17,42 +17,42 @@ export { CustomersDataSource } from './_data-sources/precaution.datasource';
 // Actions
 // Customer Actions =>
 export {
-    CustomerActionTypes,
-    CustomerActions,
-    CustomerOnServerCreated,
-    CustomerCreated,
-    CustomerUpdated,
-    CustomersStatusUpdated,
-    OneCustomerDeleted,
-    ManyCustomersDeleted,
-    CustomersPageRequested,
-    CustomersPageLoaded,
-    CustomersPageCancelled,
-    CustomersPageToggleLoading
+    PrecautionQAActionTypes,
+    PrecautionQAActions,
+    PrecautionQAOnServerCreated,
+    PrecautionQACreated,
+    PrecautionQAUpdated,
+    PrecautionQAStatusUpdated,
+    OnePrecautionQADeleted,
+    ManyPrecautionQADeleted,
+    PrecautionQAPageRequested,
+    PrecautionQAPageLoaded,
+    PrecautionQAPageCancelled,
+    PrecautionQAPageToggleLoading
 } from './_actions/precaution.actions';
 
 
 
 // Effects
-export { CustomerEffects } from './_effects/precaution.effects';
+export { PrecautionQAEffects } from './_effects/precaution.effects';
 
 
 // Reducers
-export { customersReducer } from './_reducers/precaution.reducers';
+export {  PrecautionQAReducer } from './_reducers/precaution.reducers';
 
 
 // Selectors
 // Customer selectors =>
 export {
-    selectCustomerById,
-    selectCustomersInStore,
-    selectCustomersPageLoading,
-    selectLastCreatedCustomerId,
-    selectCustomersActionLoading,
-    selectCustomersShowInitWaitingMessage
+   // selectPrecautionQAById,
+    selectPrecautionQAInStore,
+   // selectPrecautionQAPageLoading,
+    selectLastCreatedPrecautionQAId,
+    selectPrecautionQAActionLoading,
+    selectPrecautionQAShowInitWaitingMessage
 } from './_selectors/precaution.selectors';
 
 
 // Services
-export { CustomersService } from './_services/';
+export { PrecautionQAService } from './_services/';
 

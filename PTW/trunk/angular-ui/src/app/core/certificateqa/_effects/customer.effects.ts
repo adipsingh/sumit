@@ -25,7 +25,8 @@ import {
     CustomerUpdated,
     CustomersStatusUpdated,
     CustomerCreated,
-    CustomerOnServerCreated
+    CustomerOnServerCreated,
+    CertificatePageRequested
 } from '../_actions/customer.actions';
 import { of } from 'rxjs';
 
@@ -126,6 +127,30 @@ export class CustomerEffects {
                 return this.hideActionLoadingDistpatcher;
             }),
         );
+
+        
+
+        @Effect()
+        loadCertificatePage$ = this.actions$.pipe(
+            ofType<CertificatePageRequested>(CustomerActionTypes.CertificatePageRequested),
+            mergeMap((  ) => {
+                this.store.dispatch(this.showPageLoadingDistpatcher);
+                const requestToServer = this.customersService.getAllCertificate();
+                const lastQuery = of();
+                return forkJoin(requestToServer, lastQuery);
+            }),
+            // map(response => {
+            //     const result: QueryResultsModel = response[0];
+            //     const lastQuery: QueryParamsModel = response[1];
+            //     const pageLoadedDispatch = new CustomersPageLoaded({
+            //         customers: result.items,
+            //         totalCount: result.totalCount,
+            //         page: lastQuery
+            //     });
+            //     return pageLoadedDispatch;
+            // })
+        );
+        
 
     constructor(private actions$: Actions, private customersService: CustomersService, private store: Store<AppState>) { }
 }

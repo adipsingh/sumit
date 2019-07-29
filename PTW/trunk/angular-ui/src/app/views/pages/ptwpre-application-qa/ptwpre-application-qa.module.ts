@@ -1,11 +1,10 @@
+import { RouterModule } from '@angular/router';
 
-import { RouterModule, Routes } from '@angular/router';
-import { PTWPreApplicationQAComponent } from './ptwpre-application-qa.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+
 import {
-  MatInputModule,
-  
+	MatInputModule,
 	MatListModule,
 	MatPaginatorModule,
 	MatProgressSpinnerModule,
@@ -26,73 +25,22 @@ import {
 	MatAutocompleteModule,
 	MAT_DIALOG_DEFAULT_OPTIONS,
 	MatSnackBarModule,
-	MatTooltipModule,
-  MAT_CHECKBOX_CLICK_ACTION
+  MatTooltipModule
 } from '@angular/material';
-import { NgbProgressbarModule } from '@ng-bootstrap/ng-bootstrap';
-import { environment } from '../../../../../src/environments/environment';
-import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
-import { FakeApiService } from '../../../../../src/app/core/_base/layout';
-import { StoreModule } from '@ngrx/store';
-import { ptwqaReducer, QuestionEffects, PTWQAService } from '../../../../../src/app/core/ptwqa';
-import { EffectsModule } from '@ngrx/effects';
-import { InterceptService, TypesUtilsService, LayoutUtilsService, HttpUtilsService } from '../../../../../src/app/core/_base/crud';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { ActionNotificationComponent, DeleteEntityDialogComponent, FetchEntityDialogComponent, UpdateStatusDialogComponent } from '../../partials/content/crud';
-import { PartialsModule } from '../../partials/partials.module';
-import { NgxPermissionsModule } from 'ngx-permissions';
-import { EditComponent } from './edit/edit.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ListComponent } from './list/list.component';
-import { AddPTWTypeDialogComponent } from './add-ptwtype/add-ptwtype.dialog.component';
 
-
-const routes: Routes = [
-	{
-		path: '',
-		component: PTWPreApplicationQAComponent,
-		children: [
-			{
-				path: '',
-				redirectTo: 'ptwpre-application-qa',
-				pathMatch: 'full'
-			},
-			{
-				path: 'ptwpre-application-qa',
-				component: ListComponent
-			},
-			{
-				path: 'add',
-				component: EditComponent
-			},
-			{
-				path: 'add/:id',
-				component: EditComponent
-			},
-			{
-				path: 'edit',
-				component: EditComponent
-			},
-			{
-				path: 'edit/:id',
-				component: EditComponent
-			},
-		]
-	}
-];
+import { InterceptService, HttpUtilsService, TypesUtilsService, LayoutUtilsService } from '../../../core/_base/crud';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { ActionNotificationComponent } from '../../partials/content/crud';
+//import { AddPTWTypeDialogComponent } from './add-ptwtype/add-ptwtype.dialog.component';
+//import { AddQuestionDialogComponent } from './add-question/add-question.dialog.component';
+import { PTWPreApplicationQAComponent } from './ptwpre-application-qa.component';
 
 @NgModule({
-  declarations: [PTWPreApplicationQAComponent, EditComponent, ListComponent,AddPTWTypeDialogComponent],
+  declarations: [PTWPreApplicationQAComponent],
   imports: [
-      CommonModule,
-      RouterModule.forChild(routes),
-      HttpClientModule,
+    CommonModule,
       MatInputModule,
-      FormsModule,
-		  ReactiveFormsModule,
       MatListModule,
-      PartialsModule,
-      NgxPermissionsModule.forChild(),
       MatPaginatorModule,
       MatProgressSpinnerModule,
       MatSortModule,
@@ -110,54 +58,41 @@ const routes: Routes = [
       MatIconModule,
       MatDatepickerModule,
       MatAutocompleteModule,
-     // MAT_DIALOG_DEFAULT_OPTIONS,
       MatSnackBarModule,
       MatTooltipModule,
-     //MAT_CHECKBOX_CLICK_ACTION,
-     NgbProgressbarModule,
-		environment.isMockEnabled ? HttpClientInMemoryWebApiModule.forFeature(FakeApiService, {
-			passThruUnknownUrl: true,
-        	dataEncapsulation: false
-		}) : [],
-		StoreModule.forFeature('questions', ptwqaReducer),
-		EffectsModule.forFeature([QuestionEffects]),
-    /*RouterModule.forChild([
+     
+    RouterModule.forChild([
       {
         path:'',
         component: PTWPreApplicationQAComponent
       },
 
-    ]),*/
+    ]),
   ],
-  providers: [    
-    InterceptService,
-      {
-      provide: HTTP_INTERCEPTORS,
-        useClass: InterceptService,
-      multi: true
-      },
-    {
-      provide: MAT_DIALOG_DEFAULT_OPTIONS,
-      useValue: {
-        hasBackdrop: true,
-        panelClass: 'kt-mat-dialog-container__wrapper',
-        height: 'auto',
-        width: '900px'
-      }
-    },
-    TypesUtilsService,
-    LayoutUtilsService,
-    HttpUtilsService,
-    PTWQAService,	
-    TypesUtilsService,
-    LayoutUtilsService
-  ],
-  entryComponents: [
-    ActionNotificationComponent,    
-    DeleteEntityDialogComponent,
-    FetchEntityDialogComponent,
-	UpdateStatusDialogComponent,
-	AddPTWTypeDialogComponent,
-  ],
+  providers: [
+		InterceptService,
+		{
+        	provide: HTTP_INTERCEPTORS,
+       	 	useClass: InterceptService,
+			multi: true
+		},
+		{
+			provide: MAT_DIALOG_DEFAULT_OPTIONS,
+			useValue: {
+				hasBackdrop: true,
+				panelClass: 'kt-mat-dialog-container__wrapper',
+				height: 'auto',
+				width: '900px'
+			}
+		},
+		HttpUtilsService,
+		TypesUtilsService,
+		LayoutUtilsService
+	],
+	entryComponents: [
+    ActionNotificationComponent,
+    //AddPTWTypeDialogComponent,
+    //AddQuestionDialogComponent,
+	],
 })
 export class PTWPreApplicationQAModule { }

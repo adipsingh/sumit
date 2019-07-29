@@ -11,10 +11,9 @@ namespace MODS.PTW.Services
 {
     public interface IMediaService
     {
-        Task<string> create(Media media);
-        Media update(Media media, int id);
-        Task<IActionResult> Upload(Media formFile);
-        Media Download(int id);
+        Media create(Media media);
+        Media update(Media media, int id);       
+        Media Download(int? id);
         Media delete(int id);
     }
 }

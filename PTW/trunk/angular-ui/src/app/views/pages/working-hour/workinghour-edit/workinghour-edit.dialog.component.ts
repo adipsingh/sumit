@@ -1,6 +1,6 @@
 // Angular
 import { Component, OnInit, Inject, ChangeDetectionStrategy, ViewEncapsulation, OnDestroy } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 // Material
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 // RxJS
@@ -15,16 +15,38 @@ import { AppState } from '../../../../core/reducers';
 import { TypesUtilsService } from '../../../../core/_base/crud';
 // Services and Models
 import { CustomerModel, CustomerUpdated, CustomerOnServerCreated, selectLastCreatedCustomerId, selectCustomersPageLoading, selectCustomersActionLoading } from '../../../../core/workinhour';
-import { NgbTimeStruct } from '@ng-bootstrap/ng-bootstrap';
+import { NgbTimeStruct, NgbTimepickerConfig } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
 	// tslint:disable-next-line:component-selector
 	selector: 'kt-workinghour-edit-dialog',
 	templateUrl: './workinghour-edit.dialog.component.html',
 	changeDetection: ChangeDetectionStrategy.OnPush,
-	encapsulation: ViewEncapsulation.None
+	encapsulation: ViewEncapsulation.None,
+	providers: [NgbTimepickerConfig] 
 })
 export class WorkinghourEditDialogComponent implements OnInit, OnDestroy {
+	
+	//TimePicker
+	ctrl;
+	time: NgbTimeStruct = {hour: 13, minute: 30, second: 0};
+    hourStep = 1;
+    minuteStep = 15;
+	secondStep = 30;
+	
+
+    myGroup = new FormGroup({
+		firstName: new FormControl()
+	 });
+
+
+	 status = [
+	
+		{value: 'yes-1', viewValue: 'Yes'},
+		{value: 'no-2', viewValue: 'No'}
+	  ];
+
+	
 	// Public properties
 	customer: CustomerModel;
 	customerForm: FormGroup;
@@ -60,6 +82,25 @@ export class WorkinghourEditDialogComponent implements OnInit, OnDestroy {
 		this.store.pipe(select(selectCustomersActionLoading)).subscribe(res => this.viewLoading = res);
 		this.customer = this.data.customer;
 		this.createForm();
+
+
+		this.ctrl = new FormControl('', (control: FormControl) => {
+			const value = control.value;
+
+			if (!value) {
+				return null;
+			}
+
+			if (value.hour < 12) {
+				return { tooEarly: true };
+			}
+
+			if (value.hour > 13) {
+				return { tooLate: true };
+			}
+
+			return null;
+		});
 	}
 
 	/**
@@ -89,12 +130,12 @@ export class WorkinghourEditDialogComponent implements OnInit, OnDestroy {
 	 */
 	getTitle(): string {
 		if (this.customer.id > 0) {
-			return `Edit customer '${this.customer.firstName} ${
+			return `Edit Working Hour '${this.customer.firstName} ${
 				this.customer.lastName
 			}'`;
 		}
 
-		return 'New customer';
+		return 'New Working Hour';
 	}
 
 	/**
@@ -201,6 +242,4 @@ export class WorkinghourEditDialogComponent implements OnInit, OnDestroy {
 	onAlertClose($event) {
 		this.hasFormErrors = false;
 	}
-
-	time = {hour: 13, minute: 30};
 }

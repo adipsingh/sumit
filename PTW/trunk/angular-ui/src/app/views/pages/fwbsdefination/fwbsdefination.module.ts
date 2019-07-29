@@ -32,11 +32,12 @@ import {
 	MatTooltipModule,
   MAT_CHECKBOX_CLICK_ACTION
 } from '@angular/material';
+import { FwbsDefUploadComponent } from './fwbs-def-upload/fwbs-def-upload.component';
 
 
 
 @NgModule({
-  declarations: [FWBSDefinationComponent],
+  declarations: [FWBSDefinationComponent, FwbsDefUploadComponent],
   imports: [
     HttpClientModule,
     CommonModule,
@@ -66,7 +67,7 @@ import {
     RouterModule.forChild([
 			{
 				path: '',
-				component: FWBSDefinationComponent
+				component: FwbsDefUploadComponent
 			},
 		]),
   ]

@@ -5,45 +5,45 @@ import { each } from 'lodash';
 // CRUD
 import { QueryResultsModel, HttpExtenstionsModel } from '../../_base/crud';
 // State
-import { CustomersState } from '../_reducers/precaution.reducers';
+import {  PrecautionQAState } from '../_reducers/precaution.reducers';
 import { PrecautionQAModel } from '../_models/precaution.model';
 
-export const selectCustomersState = createFeatureSelector<CustomersState>('certificateQuestions');
+export const selectPrecautionQAState = createFeatureSelector<PrecautionQAState>('certificateQuestions');
 
-export const selectCustomerById = (customerId: number) => createSelector(
-    selectCustomersState,
-    customersState => customersState.entities[customerId]
+export const selectQuestionById = (QuestionId: number) => createSelector(
+    selectPrecautionQAState,
+    questionsState => questionsState.entities[QuestionId]
 );
 
-export const selectCustomersPageLoading = createSelector(
-    selectCustomersState,
-    customersState => customersState.listLoading
+export const selectPrecautinoQAPageLoading = createSelector(
+    selectPrecautionQAState,
+    QuestionsState => QuestionsState.listLoading
 );
 
-export const selectCustomersActionLoading = createSelector(
-    selectCustomersState,
-    customersState => customersState.actionsloading
+export const selectPrecautionQAActionLoading = createSelector(
+    selectPrecautionQAState,
+    QuestionsState => QuestionsState.actionsloading
 );
 
-export const selectLastCreatedCustomerId = createSelector(
-    selectCustomersState,
-    customersState => customersState.lastCreatedCustomerId
+export const selectLastCreatedPrecautionQAId = createSelector(
+    selectPrecautionQAState,
+    QuestionsState => QuestionsState.listLoading
 );
 
-export const selectCustomersShowInitWaitingMessage = createSelector(
-    selectCustomersState,
-    customersState => customersState.showInitWaitingMessage
+export const selectPrecautionQAShowInitWaitingMessage = createSelector(
+    selectPrecautionQAState,
+    QuestionsState => QuestionsState.showInitWaitingMessage
 );
 
-export const selectCustomersInStore = createSelector(
-    selectCustomersState,
-    customersState => {
+export const selectPrecautionQAInStore = createSelector(
+    selectPrecautionQAState,
+    QuestionsState => {
         const items: PrecautionQAModel[] = [];
-        each(customersState.entities, element => {
+        each(QuestionsState.entities, element => {
             items.push(element);
         });
         const httpExtension = new HttpExtenstionsModel();
-        const result: PrecautionQAModel[] = httpExtension.sortArray(items, customersState.lastQuery.sortField, customersState.lastQuery.sortOrder);
-        return new QueryResultsModel(result, customersState.totalCount, '');
+        const result: PrecautionQAModel[] = httpExtension.sortArray(items, QuestionsState.lastQuery.sortField, QuestionsState.lastQuery.sortOrder);
+        return new QueryResultsModel(result, QuestionsState.totalCount, '');
     }
 );

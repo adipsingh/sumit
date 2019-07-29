@@ -26,16 +26,9 @@ import {
 	selectUsersActionLoading
 } from '../../../core/auth';
 
-
-
-  
-  
-
-
 @Component({
 	selector: 'kt-precaution-qa',
 	templateUrl: './precaution-qa.component.html',
-	
 })
 export class PrecautionQaComponent implements OnInit, OnDestroy {
 	// Public properties
@@ -81,7 +74,7 @@ export class PrecautionQaComponent implements OnInit, OnDestroy {
 	ngOnInit() {
 		this.loading$ = this.store.pipe(select(selectUsersActionLoading));
 
-		const routeSubscription =  this.activatedRoute.params.subscribe(params => {
+		const routeSubscription = this.activatedRoute.params.subscribe(params => {
 			const id = params['id'];
 			if (id && id > 0) {
 				this.store.pipe(select(selectUserById(id))).subscribe(res => {
@@ -120,7 +113,7 @@ export class PrecautionQaComponent implements OnInit, OnDestroy {
 			this.subheaderService.setTitle('Create user');
 			this.subheaderService.setBreadcrumbs([
 				{ title: 'User Management', page: `user-management` },
-				{ title: 'Users',  page: `user-management/users` },
+				{ title: 'Users', page: `user-management/users` },
 				{ title: 'Create user', page: `user-management/users/add` }
 			]);
 			return;
@@ -128,7 +121,7 @@ export class PrecautionQaComponent implements OnInit, OnDestroy {
 		this.subheaderService.setTitle('Edit user');
 		this.subheaderService.setBreadcrumbs([
 			{ title: 'User Management', page: `user-management` },
-			{ title: 'Users',  page: `user-management/users` },
+			{ title: 'Users', page: `user-management/users` },
 			{ title: 'Edit user', page: `user-management/users/edit`, queryParams: { id: this.user.id } }
 		]);
 	}
@@ -181,8 +174,8 @@ export class PrecautionQaComponent implements OnInit, OnDestroy {
 		this.createForm();
 		this.hasFormErrors = false;
 		this.userForm.markAsPristine();
-        this.userForm.markAsUntouched();
-        this.userForm.updateValueAndValidity();
+		this.userForm.markAsUntouched();
+		this.userForm.updateValueAndValidity();
 	}
 
 	/**
@@ -274,7 +267,7 @@ export class PrecautionQaComponent implements OnInit, OnDestroy {
 			id: _user.id,
 			changes: _user
 		};
-		this.store.dispatch(new UserUpdated( { partialUser: updatedUser, user: _user }));
+		this.store.dispatch(new UserUpdated({ partialUser: updatedUser, user: _user }));
 		const message = `User successfully has been saved.`;
 		this.layoutUtilsService.showActionNotification(message, MessageType.Update, 5000, true, true);
 		if (withBack) {

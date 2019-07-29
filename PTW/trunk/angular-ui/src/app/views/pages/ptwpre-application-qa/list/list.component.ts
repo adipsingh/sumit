@@ -9,7 +9,6 @@ import { AppState } from '../../../../../../src/app/core/reducers';
 import { Store } from '@ngrx/store';
 import { tap, skip, distinctUntilChanged, take, delay } from 'rxjs/operators';
 import { EditComponent } from '../edit/edit.component';
-import { AddPTWTypeDialogComponent } from '../add-ptwtype/add-ptwtype.dialog.component';
 
 
 @Component({
@@ -180,24 +179,4 @@ export class ListComponent implements OnInit {
 			this.loadQuestionsList();
 		});
   }
-
-  /**
-	 * Add PTW Type
-	 */
-	addPTWType() {
-		this.openPTWTypeDialog();
-	}
-
-	openPTWTypeDialog(){
-		const _saveMessage = `PTW Type successfully has been saved.`;
-		const _messageType =  MessageType.Create;
-		const dialogRef = this.dialog.open(AddPTWTypeDialogComponent, { data: { Id: 0 } });
-		dialogRef.afterClosed().subscribe(res => {
-			if (!res) {
-				return;
-			}
-
-			this.layoutUtilsService.showActionNotification(_saveMessage, _messageType, 10000, true, true);
-		});
-	}
 }

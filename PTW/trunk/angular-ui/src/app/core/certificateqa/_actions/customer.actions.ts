@@ -17,7 +17,8 @@ export enum CustomerActionTypes {
     CustomersPageLoaded = '[Customers API] Customers Page Loaded',
     CustomersPageCancelled = '[Customers API] Customers Page Cancelled',
     CustomersPageToggleLoading = '[Customers] Customers Page Toggle Loading',
-    CustomerActionToggleLoading = '[Customers] Customers Action Toggle Loading'
+    CustomerActionToggleLoading = '[Customers] Customers Action Toggle Loading',
+    CertificatePageRequested = '[Certificate List Page] Certificate Page Requested'
 }
 
 export class CustomerOnServerCreated implements Action {
@@ -78,6 +79,13 @@ export class CustomersPageToggleLoading implements Action {
 export class CustomerActionToggleLoading implements Action {
     readonly type = CustomerActionTypes.CustomerActionToggleLoading;
     constructor(public payload: { isLoading: boolean }) { }
+}
+
+
+
+export class CertificatePageRequested implements Action {
+    readonly type = CustomerActionTypes.CertificatePageRequested;
+   // constructor(public payload: { page: QueryParamsModel }) { }
 }
 
 export type CustomerActions = CustomerOnServerCreated

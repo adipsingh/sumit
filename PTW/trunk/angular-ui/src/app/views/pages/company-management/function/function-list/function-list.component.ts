@@ -41,7 +41,7 @@ import {
 	UsersPageRequested,
 	selectUserById,
 	selectAllRoles
-} from '../../../../../core/auth';
+} from '../../../../../core/functions';
 import { SubheaderService } from '../../../../../core/_base/layout';
 
 // Table with EDIT item in MODAL

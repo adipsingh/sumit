@@ -38,7 +38,7 @@ import {
 	UserOnServerCreated,
 	selectLastCreatedUserId,
 	selectUsersActionLoading
-} from '../../../../../core/auth';
+} from '../../../../../core/functions';
 
 @Component({
 	selector: 'kt-function-edit',

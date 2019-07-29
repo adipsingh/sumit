@@ -30,45 +30,36 @@
 
 			<div class="form-group kt-form__group row">
 					<div class="col-lg-6 kt-margin-bottom-20-mobile">
-						<div class="kt-form__control">
-									<mat-form-field class="mat-form-field-fluid">
-											<mat-label>Day Shift</mat-label>
-											<select matNativeControl required>
-											  <option value="">Day Shift</option>
-											  <option value="yes">Yes</option>
-											  <option value="no">No</option>
-											</select>
-											<mat-hint align="start">
-													<strong>Shift Change</strong> by Status
-											</mat-hint>
-									</mat-form-field>
-						</div>
-						</div>
+						<mat-form-field>
+							<label for="workingstart">Day Shift</label> 
+						   <mat-select placeholder="Day Shift">
+							 <mat-option *ngFor="let status of status" [value]="status.value">
+							   {{ status.viewValue }}
+							 </mat-option>
+						   </mat-select>
+					   </mat-form-field>
+						
+					</div>
 			</div>
 			<div class="form-group kt-form__group row">
 				<div class="col-lg-6 kt-margin-bottom-20-mobile">
-					<mat-form-field class="mat-form-field-fluid">
-						<input matInput placeholder="Working Start" formControlName="firstName" />
+					<!-- <mat-form-field class="mat-form-field-fluid"> -->
+						<!-- <input matInput placeholder="Working Start" formControlName="firstName" />
 						<mat-error>Working Start is
 							<strong>required</strong>
-						</mat-error> -->
-						<!-- <div class="kt-section">
-								
-							
-							 <div class="kt-section">
-										<div class="kt-section__content">
-										  <ngb-timepicker [(ngModel)]="time"></ngb-timepicker>
-										</div>
-									  </div>
-									  <div class="kt-separator kt-separator--dashed"></div>
-									  <div class="kt-section">
-										<div class="kt-section__content">
-										  <pre>Selected time: {{time | json}}</pre>
-										</div>
-									  </div> -->
-									  
-					</mat-form-field>
-					<mat-form-field class="mat-form-field-fluid">
+						</mat-error>  -->
+						
+						<div class="kt-section">
+							<div class="kt-section__content">		    
+								<div [formGroup]="myGroup">
+									<label for="workingstart">Working Start</label>
+									<!-- <input formControlName="firstName"> -->
+									<ngb-timepicker [(ngModel)]="time"  [seconds]="true" [hourStep]="hourStep" [minuteStep]="minuteStep" [secondStep]="secondStep" [ngModelOptions]="{standalone: true}"></ngb-timepicker>	
+								</div>
+							</div>
+						</div>	
+					<!-- </mat-form-field> -->
+					<!-- <mat-form-field class="mat-form-field-fluid">
 						<input matInput placeholder="Break Time Start" formControlName="firstName" />
 						<mat-error>Break Time Start is
 							<strong>required</strong>
@@ -85,308 +76,408 @@
 						<mat-error>Working Finish is
 							<strong>required</strong>
 						</mat-error>
-					</mat-form-field>
+					</mat-form-field> -->
+					<div class="kt-section">
+							<div class="kt-section__content">		    
+								<div [formGroup]="myGroup">
+									<label for="workingstart">Break time Start</label>
+									<!-- <input formControlName="firstName"> -->
+									<ngb-timepicker [(ngModel)]="time"  [seconds]="true" [hourStep]="hourStep" [minuteStep]="minuteStep" [secondStep]="secondStep" [ngModelOptions]="{standalone: true}"></ngb-timepicker>	
+								</div>
+							</div>
+					</div>
+
+					<div class="kt-section">
+							<div class="kt-section__content">		    
+								<div [formGroup]="myGroup">
+									<label for="workingstart">Break time Finish</label>
+									<!-- <input formControlName="firstName"> -->
+									<ngb-timepicker [(ngModel)]="time"  [seconds]="true" [hourStep]="hourStep" [minuteStep]="minuteStep" [secondStep]="secondStep" [ngModelOptions]="{standalone: true}"></ngb-timepicker>	
+								</div>
+							</div>
+					</div>
+
+					<div class="kt-section">
+							<div class="kt-section__content">		    
+								<div [formGroup]="myGroup">
+									<label for="workingstart">Working Finish</label>
+									<!-- <input formControlName="firstName"> -->
+									<ngb-timepicker [(ngModel)]="time"  [seconds]="true" [hourStep]="hourStep" [minuteStep]="minuteStep" [secondStep]="secondStep" [ngModelOptions]="{standalone: true}"></ngb-timepicker>	
+								</div>
+							</div>
+					</div>
+	
+
 				</div>
 				<div class="col-lg-6 kt-margin-bottom-20-mobile">
-					<mat-form-field class="mat-form-field-fluid">
+					<!-- <mat-form-field class="mat-form-field-fluid">
 						<input matInput placeholder="Optional 1 Break Time Start" formControlName="lastName" />
 						<mat-error>Optional 1 Break Time Start is
 							<strong>required</strong>
 						</mat-error>
-						<!-- <mat-hint align="start">Optional 
-							<strong>1 Break Time Start</strong>
-						</mat-hint> -->
+						
 					</mat-form-field>
 					<mat-form-field class="mat-form-field-fluid">
 						<input matInput placeholder="Optional 1 Break Time Finish" formControlName="lastName" />
 						<mat-error>Optional 1 Break Time Finish
 							<strong>required</strong>
 						</mat-error>
-						<!-- <mat-hint align="start">Optional 
-							<strong>1 Break Time Finish</strong>
-						</mat-hint> -->
+					
 					</mat-form-field>
 					<mat-form-field class="mat-form-field-fluid">
 						<input matInput placeholder="Optional 2 Break Time Start" formControlName="lastName" />
 						<mat-error>Optional 2 Break Time Start is
 							<strong>required</strong>
 						</mat-error>
-						<!-- <mat-hint align="start">Optional 
-							<strong>2 Break Time Start</strong>
-						</mat-hint> -->
+					
 					</mat-form-field>
 					<mat-form-field class="mat-form-field-fluid">
 						<input matInput placeholder="Optional 2 Break Time Finish" formControlName="lastName" />
 						<mat-error>Last Name is
 							<strong>required</strong>
 						</mat-error>
-						<!-- <mat-hint align="start">Optional 
-							<strong>2 Break Time Finish</strong>
-						</mat-hint> -->
-					</mat-form-field>
+						
+					</mat-form-field> -->
+
+
+					<div class="kt-section">
+							<div class="kt-section__content">		    
+								<div [formGroup]="myGroup">
+									<label for="workingstart">Optional 1 Break Time start</label>
+									<!-- <input formControlName="firstName"> -->
+									<ngb-timepicker [(ngModel)]="time"  [seconds]="true" [hourStep]="hourStep" [minuteStep]="minuteStep" [secondStep]="secondStep" [ngModelOptions]="{standalone: true}"></ngb-timepicker>	
+								</div>
+							</div>
+					</div>
+
+					<div class="kt-section">
+							<div class="kt-section__content">		    
+								<div [formGroup]="myGroup">
+									<label for="workingstart">Optional 1 Break Time Finish</label>
+									<!-- <input formControlName="firstName"> -->
+									<ngb-timepicker [(ngModel)]="time"  [seconds]="true" [hourStep]="hourStep" [minuteStep]="minuteStep" [secondStep]="secondStep" [ngModelOptions]="{standalone: true}"></ngb-timepicker>	
+								</div>
+							</div>
+					</div>
+
+					<div class="kt-section">
+							<div class="kt-section__content">		    
+								<div [formGroup]="myGroup">
+									<label for="workingstart">Optional 2 Break Time start</label>
+									<!-- <input formControlName="firstName"> -->
+									<ngb-timepicker [(ngModel)]="time"  [seconds]="true" [hourStep]="hourStep" [minuteStep]="minuteStep" [secondStep]="secondStep" [ngModelOptions]="{standalone: true}"></ngb-timepicker>	
+								</div>
+							</div>
+					</div>
+
+					<div class="kt-section">
+							<div class="kt-section__content">		    
+								<div [formGroup]="myGroup">
+									<label for="workingstart">Optional 2 Break Time Finish</label>
+									<!-- <input formControlName="firstName"> -->
+									<ngb-timepicker [(ngModel)]="time"  [seconds]="true" [hourStep]="hourStep" [minuteStep]="minuteStep" [secondStep]="secondStep" [ngModelOptions]="{standalone: true}"></ngb-timepicker>	
+								</div>
+							</div>
+					</div>
 				</div>
-				<!-- <div class="col-lg-4 kt-margin-bottom-20-mobile">
-					<mat-form-field class="mat-form-field-fluid">
-						<input matInput placeholder="Enter Login" formControlName="userName" />
-						<mat-error>Login is
-							<strong>required</strong>
-						</mat-error>
-						<mat-hint align="start">Please enter
-							<strong>Login</strong>
-						</mat-hint>
-					</mat-form-field>
-				</div> -->
+				
 			</div>
 			<div class="kt-separator kt-separator--dashed"></div>
 			<div class="form-group kt-form__group row">
 					<div class="col-lg-6 kt-margin-bottom-20-mobile">
 						<div class="kt-form__control">
-									<mat-form-field class="mat-form-field-fluid">
-											<mat-label>Night Shift</mat-label>
-											<select matNativeControl required>
-											  <option value="">Night Shift</option>
-											  <option value="yes">Yes</option>
-											  <option value="no">No</option>
-											</select>
-											<mat-hint align="start">
-													<strong>Shift Change</strong> by Status
-											</mat-hint>
-									</mat-form-field>
+								<mat-form-field>
+										<label for="workingstart">Night Shift</label> 
+									   <mat-select placeholder="Night Shift">
+										 <mat-option *ngFor="let status of status" [value]="status.value">
+										   {{ status.viewValue }}
+										 </mat-option>
+									   </mat-select>
+								   </mat-form-field>
 						</div>
 						</div>
 			</div>
 			<div class="form-group kt-form__group row">
 				<div class="col-lg-6 kt-margin-bottom-20-mobile">
-					<mat-form-field class="mat-form-field-fluid">
-						<input matInput placeholder="Working Start" formControlName="firstName" />
-						<mat-error>Working Start is
-							<strong>required</strong>
-						</mat-error>
-					</mat-form-field>
-					<mat-form-field class="mat-form-field-fluid">
-						<input matInput placeholder="Break Time Start" formControlName="firstName" />
-						<mat-error>Break Time Start is
-							<strong>required</strong>
-						</mat-error>
-					</mat-form-field>
-					<mat-form-field class="mat-form-field-fluid">
-						<input matInput placeholder="Break Time Finish" formControlName="firstName" />
-						<mat-error>Break Time Finish is
-							<strong>required</strong>
-						</mat-error>
-					</mat-form-field>
-					<mat-form-field class="mat-form-field-fluid">
-						<input matInput placeholder="Working Finish" formControlName="firstName" />
-						<mat-error>Working Finish is
-							<strong>required</strong>
-						</mat-error>
-					</mat-form-field>
-				</div>
-				<div class="col-lg-6 kt-margin-bottom-20-mobile">
-					<mat-form-field class="mat-form-field-fluid">
-						<input matInput placeholder="Optional 1 Break Time Start" formControlName="lastName" />
-						<mat-error>Optional 1 Break Time Start is
-							<strong>required</strong>
-						</mat-error>
-						<!-- <mat-hint align="start">Optional 
-							<strong>1 Break Time Start</strong>
-						</mat-hint> -->
-					</mat-form-field>
-					<mat-form-field class="mat-form-field-fluid">
-						<input matInput placeholder="Optional 1 Break Time Finish" formControlName="lastName" />
-						<mat-error>Optional 1 Break Time Finish
-							<strong>required</strong>
-						</mat-error>
-						<!-- <mat-hint align="start">Optional 
-							<strong>1 Break Time Finish</strong>
-						</mat-hint> -->
-					</mat-form-field>
-					<mat-form-field class="mat-form-field-fluid">
-						<input matInput placeholder="Optional 2 Break Time Start" formControlName="lastName" />
-						<mat-error>Optional 2 Break Time Start is
-							<strong>required</strong>
-						</mat-error>
-						<!-- <mat-hint align="start">Optional 
-							<strong>2 Break Time Start</strong>
-						</mat-hint> -->
-					</mat-form-field>
-					<mat-form-field class="mat-form-field-fluid">
-						<input matInput placeholder="Optional 2 Break Time Finish" formControlName="lastName" />
-						<mat-error>Last Name is
-							<strong>required</strong>
-						</mat-error>
-						<!-- <mat-hint align="start">Optional 
-							<strong>2 Break Time Finish</strong>
-						</mat-hint> -->
-					</mat-form-field>
-				</div>
-			</div>
-			<div class="kt-separator kt-separator--dashed"></div>
-			<div class="form-group kt-form__group row">
-					<div class="col-lg-6 kt-margin-bottom-20-mobile">
-						<div class="kt-form__control">
-									<mat-form-field class="mat-form-field-fluid">
-											<mat-label>Another Shift</mat-label>
-											<select matNativeControl required>
-											  <option value="">Another Shift</option>
-											  <option value="yes">Yes</option>
-											  <option value="no">No</option>
-											</select>
-											<mat-hint align="start">
-													<strong>Shift Change</strong> by Status
-											</mat-hint>
-									</mat-form-field>
+						
+						<div class="kt-section">
+								<div class="kt-section__content">		    
+									<div [formGroup]="myGroup">
+										<label for="workingstart">Working Start</label>
+										<!-- <input formControlName="firstName"> -->
+										<ngb-timepicker [(ngModel)]="time"  [seconds]="true" [hourStep]="hourStep" [minuteStep]="minuteStep" [secondStep]="secondStep" [ngModelOptions]="{standalone: true}"></ngb-timepicker>	
+									</div>
+								</div>
+							</div>	
+						
+						<div class="kt-section">
+								<div class="kt-section__content">		    
+									<div [formGroup]="myGroup">
+										<label for="workingstart">Break time Start</label>
+										<!-- <input formControlName="firstName"> -->
+										<ngb-timepicker [(ngModel)]="time"  [seconds]="true" [hourStep]="hourStep" [minuteStep]="minuteStep" [secondStep]="secondStep" [ngModelOptions]="{standalone: true}"></ngb-timepicker>	
+									</div>
+								</div>
 						</div>
+	
+						<div class="kt-section">
+								<div class="kt-section__content">		    
+									<div [formGroup]="myGroup">
+										<label for="workingstart">Break time Finish</label>
+										<!-- <input formControlName="firstName"> -->
+										<ngb-timepicker [(ngModel)]="time"  [seconds]="true" [hourStep]="hourStep" [minuteStep]="minuteStep" [secondStep]="secondStep" [ngModelOptions]="{standalone: true}"></ngb-timepicker>	
+									</div>
+								</div>
 						</div>
-			</div>
-			<div class="form-group kt-form__group row">
-				<div class="col-lg-6 kt-margin-bottom-20-mobile">
-					<mat-form-field class="mat-form-field-fluid">
-						<input matInput placeholder="Working Start" formControlName="firstName" />
-						<mat-error>Working Start is
-							<strong>required</strong>
-						</mat-error>
-					</mat-form-field>
-					<mat-form-field class="mat-form-field-fluid">
-						<input matInput placeholder="Break Time Start" formControlName="firstName" />
-						<mat-error>Break Time Start is
-							<strong>required</strong>
-						</mat-error>
-					</mat-form-field>
-					<mat-form-field class="mat-form-field-fluid">
-						<input matInput placeholder="Break Time Finish" formControlName="firstName" />
-						<mat-error>Break Time Finish is
-							<strong>required</strong>
-						</mat-error>
-					</mat-form-field>
-					<mat-form-field class="mat-form-field-fluid">
-						<input matInput placeholder="Working Finish" formControlName="firstName" />
-						<mat-error>Working Finish is
-							<strong>required</strong>
-						</mat-error>
-					</mat-form-field>
+	
+						<div class="kt-section">
+								<div class="kt-section__content">		    
+									<div [formGroup]="myGroup">
+										<label for="workingstart">Working Finish</label>
+										<!-- <input formControlName="firstName"> -->
+										<ngb-timepicker [(ngModel)]="time"  [seconds]="true" [hourStep]="hourStep" [minuteStep]="minuteStep" [secondStep]="secondStep" [ngModelOptions]="{standalone: true}"></ngb-timepicker>	
+									</div>
+								</div>
+						</div>
 				</div>
 				<div class="col-lg-6 kt-margin-bottom-20-mobile">
-					<mat-form-field class="mat-form-field-fluid">
-						<input matInput placeholder="Optional 1 Break Time Start" formControlName="lastName" />
-						<mat-error>Optional 1 Break Time Start is
-							<strong>required</strong>
-						</mat-error>
-						<!-- <mat-hint align="start">Optional 
-							<strong>1 Break Time Start</strong>
-						</mat-hint> -->
-					</mat-form-field>
-					<mat-form-field class="mat-form-field-fluid">
-						<input matInput placeholder="Optional 1 Break Time Finish" formControlName="lastName" />
-						<mat-error>Optional 1 Break Time Finish
-							<strong>required</strong>
-						</mat-error>
-						<!-- <mat-hint align="start">Optional 
-							<strong>1 Break Time Finish</strong>
-						</mat-hint> -->
-					</mat-form-field>
-					<mat-form-field class="mat-form-field-fluid">
-						<input matInput placeholder="Optional 2 Break Time Start" formControlName="lastName" />
-						<mat-error>Optional 2 Break Time Start is
-							<strong>required</strong>
-						</mat-error>
-						<!-- <mat-hint align="start">Optional 
-							<strong>2 Break Time Start</strong>
-						</mat-hint> -->
-					</mat-form-field>
-					<mat-form-field class="mat-form-field-fluid">
-						<input matInput placeholder="Optional 2 Break Time Finish" formControlName="lastName" />
-						<mat-error>Last Name is
-							<strong>required</strong>
-						</mat-error>
-						<!-- <mat-hint align="start">Optional 
-							<strong>2 Break Time Finish</strong>
-						</mat-hint> -->
-					</mat-form-field>
+						<div class="kt-section">
+								<div class="kt-section__content">		    
+									<div [formGroup]="myGroup">
+										<label for="workingstart">Optional 1 Break Time start</label>
+										<!-- <input formControlName="firstName"> -->
+										<ngb-timepicker [(ngModel)]="time"  [seconds]="true" [hourStep]="hourStep" [minuteStep]="minuteStep" [secondStep]="secondStep" [ngModelOptions]="{standalone: true}"></ngb-timepicker>	
+									</div>
+								</div>
+						</div>
+	
+						<div class="kt-section">
+								<div class="kt-section__content">		    
+									<div [formGroup]="myGroup">
+										<label for="workingstart">Optional 1 Break Time Finish</label>
+										<!-- <input formControlName="firstName"> -->
+										<ngb-timepicker [(ngModel)]="time"  [seconds]="true" [hourStep]="hourStep" [minuteStep]="minuteStep" [secondStep]="secondStep" [ngModelOptions]="{standalone: true}"></ngb-timepicker>	
+									</div>
+								</div>
+						</div>
+	
+						<div class="kt-section">
+								<div class="kt-section__content">		    
+									<div [formGroup]="myGroup">
+										<label for="workingstart">Optional 2 Break Time start</label>
+										<!-- <input formControlName="firstName"> -->
+										<ngb-timepicker [(ngModel)]="time"  [seconds]="true" [hourStep]="hourStep" [minuteStep]="minuteStep" [secondStep]="secondStep" [ngModelOptions]="{standalone: true}"></ngb-timepicker>	
+									</div>
+								</div>
+						</div>
+	
+						<div class="kt-section">
+								<div class="kt-section__content">		    
+									<div [formGroup]="myGroup">
+										<label for="workingstart">Optional 2 Break Time Finish</label>
+										<!-- <input formControlName="firstName"> -->
+										<ngb-timepicker [(ngModel)]="time"  [seconds]="true" [hourStep]="hourStep" [minuteStep]="minuteStep" [secondStep]="secondStep" [ngModelOptions]="{standalone: true}"></ngb-timepicker>	
+									</div>
+								</div>
+						</div>
 				</div>
 			</div>
 			<div class="kt-separator kt-separator--dashed"></div>
 			<div class="form-group kt-form__group row">
 					<div class="col-lg-6 kt-margin-bottom-20-mobile">
 						<div class="kt-form__control">
-									<mat-form-field class="mat-form-field-fluid">
-											<mat-label>Another Shift</mat-label>
-											<select matNativeControl required>
-											  <option value="">Another Shift</option>
-											  <option value="yes">Yes</option>
-											  <option value="no">No</option>
-											</select>
-											<mat-hint align="start">
-													<strong>Shift Change</strong> by Status
-											</mat-hint>
-									</mat-form-field>
+								<mat-form-field>
+										<label for="workingstart">Another Shift</label> 
+									   <mat-select placeholder="Another Shift">
+										 <mat-option *ngFor="let status of status" [value]="status.value">
+										   {{ status.viewValue }}
+										 </mat-option>
+									   </mat-select>
+								   </mat-form-field>
 						</div>
 						</div>
 			</div>
 			<div class="form-group kt-form__group row">
 				<div class="col-lg-6 kt-margin-bottom-20-mobile">
-					<mat-form-field class="mat-form-field-fluid">
-						<input matInput placeholder="Working Start" formControlName="firstName" />
-						<mat-error>Working Start is
-							<strong>required</strong>
-						</mat-error>
-					</mat-form-field>
-					<mat-form-field class="mat-form-field-fluid">
-						<input matInput placeholder="Break Time Start" formControlName="firstName" />
-						<mat-error>Break Time Start is
-							<strong>required</strong>
-						</mat-error>
-					</mat-form-field>
-					<mat-form-field class="mat-form-field-fluid">
-						<input matInput placeholder="Break Time Finish" formControlName="firstName" />
-						<mat-error>Break Time Finish is
-							<strong>required</strong>
-						</mat-error>
-					</mat-form-field>
-					<mat-form-field class="mat-form-field-fluid">
-						<input matInput placeholder="Working Finish" formControlName="firstName" />
-						<mat-error>Working Finish is
-							<strong>required</strong>
-						</mat-error>
-					</mat-form-field>
+						<div class="kt-section">
+								<div class="kt-section__content">		    
+									<div [formGroup]="myGroup">
+										<label for="workingstart">Working Start</label>
+										<!-- <input formControlName="firstName"> -->
+										<ngb-timepicker [(ngModel)]="time"  [seconds]="true" [hourStep]="hourStep" [minuteStep]="minuteStep" [secondStep]="secondStep" [ngModelOptions]="{standalone: true}"></ngb-timepicker>	
+									</div>
+								</div>
+							</div>	
+						
+						<div class="kt-section">
+								<div class="kt-section__content">		    
+									<div [formGroup]="myGroup">
+										<label for="workingstart">Break time Start</label>
+										<!-- <input formControlName="firstName"> -->
+										<ngb-timepicker [(ngModel)]="time"  [seconds]="true" [hourStep]="hourStep" [minuteStep]="minuteStep" [secondStep]="secondStep" [ngModelOptions]="{standalone: true}"></ngb-timepicker>	
+									</div>
+								</div>
+						</div>
+	
+						<div class="kt-section">
+								<div class="kt-section__content">		    
+									<div [formGroup]="myGroup">
+										<label for="workingstart">Break time Finish</label>
+										<!-- <input formControlName="firstName"> -->
+										<ngb-timepicker [(ngModel)]="time"  [seconds]="true" [hourStep]="hourStep" [minuteStep]="minuteStep" [secondStep]="secondStep" [ngModelOptions]="{standalone: true}"></ngb-timepicker>	
+									</div>
+								</div>
+						</div>
+	
+						<div class="kt-section">
+								<div class="kt-section__content">		    
+									<div [formGroup]="myGroup">
+										<label for="workingstart">Working Finish</label>
+										<!-- <input formControlName="firstName"> -->
+										<ngb-timepicker [(ngModel)]="time"  [seconds]="true" [hourStep]="hourStep" [minuteStep]="minuteStep" [secondStep]="secondStep" [ngModelOptions]="{standalone: true}"></ngb-timepicker>	
+									</div>
+								</div>
+						</div>
 				</div>
 				<div class="col-lg-6 kt-margin-bottom-20-mobile">
-					<mat-form-field class="mat-form-field-fluid">
-						<input matInput placeholder="Optional 1 Break Time Start" formControlName="lastName" />
-						<mat-error>Optional 1 Break Time Start is
-							<strong>required</strong>
-						</mat-error>
-						<!-- <mat-hint align="start">Optional 
-							<strong>1 Break Time Start</strong>
-						</mat-hint> -->
-					</mat-form-field>
-					<mat-form-field class="mat-form-field-fluid">
-						<input matInput placeholder="Optional 1 Break Time Finish" formControlName="lastName" />
-						<mat-error>Optional 1 Break Time Finish
-							<strong>required</strong>
-						</mat-error>
-						<!-- <mat-hint align="start">Optional 
-							<strong>1 Break Time Finish</strong>
-						</mat-hint> -->
-					</mat-form-field>
-					<mat-form-field class="mat-form-field-fluid">
-						<input matInput placeholder="Optional 2 Break Time Start" formControlName="lastName" />
-						<mat-error>Optional 2 Break Time Start is
-							<strong>required</strong>
-						</mat-error>
-						<!-- <mat-hint align="start">Optional 
-							<strong>2 Break Time Start</strong>
-						</mat-hint> -->
-					</mat-form-field>
-					<mat-form-field class="mat-form-field-fluid">
-						<input matInput placeholder="Optional 2 Break Time Finish" formControlName="lastName" />
-						<mat-error>Last Name is
-							<strong>required</strong>
-						</mat-error>
-						<!-- <mat-hint align="start">Optional 
-							<strong>2 Break Time Finish</strong>
-						</mat-hint> -->
-					</mat-form-field>
+						<div class="kt-section">
+								<div class="kt-section__content">		    
+									<div [formGroup]="myGroup">
+										<label for="workingstart">Optional 1 Break Time start</label>
+										<!-- <input formControlName="firstName"> -->
+										<ngb-timepicker [(ngModel)]="time"  [seconds]="true" [hourStep]="hourStep" [minuteStep]="minuteStep" [secondStep]="secondStep" [ngModelOptions]="{standalone: true}"></ngb-timepicker>	
+									</div>
+								</div>
+						</div>
+	
+						<div class="kt-section">
+								<div class="kt-section__content">		    
+									<div [formGroup]="myGroup">
+										<label for="workingstart">Optional 1 Break Time Finish</label>
+										<!-- <input formControlName="firstName"> -->
+										<ngb-timepicker [(ngModel)]="time"  [seconds]="true" [hourStep]="hourStep" [minuteStep]="minuteStep" [secondStep]="secondStep" [ngModelOptions]="{standalone: true}"></ngb-timepicker>	
+									</div>
+								</div>
+						</div>
+	
+						<div class="kt-section">
+								<div class="kt-section__content">		    
+									<div [formGroup]="myGroup">
+										<label for="workingstart">Optional 2 Break Time start</label>
+										<!-- <input formControlName="firstName"> -->
+										<ngb-timepicker [(ngModel)]="time"  [seconds]="true" [hourStep]="hourStep" [minuteStep]="minuteStep" [secondStep]="secondStep" [ngModelOptions]="{standalone: true}"></ngb-timepicker>	
+									</div>
+								</div>
+						</div>
+	
+						<div class="kt-section">
+								<div class="kt-section__content">		    
+									<div [formGroup]="myGroup">
+										<label for="workingstart">Optional 2 Break Time Finish</label>
+										<!-- <input formControlName="firstName"> -->
+										<ngb-timepicker [(ngModel)]="time"  [seconds]="true" [hourStep]="hourStep" [minuteStep]="minuteStep" [secondStep]="secondStep" [ngModelOptions]="{standalone: true}"></ngb-timepicker>	
+									</div>
+								</div>
+						</div>
+				</div>
+			</div>
+			<div class="kt-separator kt-separator--dashed"></div>
+			<div class="form-group kt-form__group row">
+					<div class="col-lg-6 kt-margin-bottom-20-mobile">
+						<div class="kt-form__control">
+								<mat-form-field>
+										<label for="workingstart">Another Shift</label> 
+									   <mat-select placeholder="Another Shift">
+										 <mat-option *ngFor="let status of status" [value]="status.value">
+										   {{ status.viewValue }}
+										 </mat-option>
+									   </mat-select>
+								   </mat-form-field>
+						</div>
+						</div>
+			</div>
+			<div class="form-group kt-form__group row">
+				<div class="col-lg-6 kt-margin-bottom-20-mobile">
+						<div class="kt-section">
+								<div class="kt-section__content">		    
+									<div [formGroup]="myGroup">
+										<label for="workingstart">Working Start</label>
+										<!-- <input formControlName="firstName"> -->
+										<ngb-timepicker [(ngModel)]="time"  [seconds]="true" [hourStep]="hourStep" [minuteStep]="minuteStep" [secondStep]="secondStep" [ngModelOptions]="{standalone: true}"></ngb-timepicker>	
+									</div>
+								</div>
+							</div>	
+						
+						<div class="kt-section">
+								<div class="kt-section__content">		    
+									<div [formGroup]="myGroup">
+										<label for="workingstart">Break time Start</label>
+										<!-- <input formControlName="firstName"> -->
+										<ngb-timepicker [(ngModel)]="time"  [seconds]="true" [hourStep]="hourStep" [minuteStep]="minuteStep" [secondStep]="secondStep" [ngModelOptions]="{standalone: true}"></ngb-timepicker>	
+									</div>
+								</div>
+						</div>
+	
+						<div class="kt-section">
+								<div class="kt-section__content">		    
+									<div [formGroup]="myGroup">
+										<label for="workingstart">Break time Finish</label>
+										<!-- <input formControlName="firstName"> -->
+										<ngb-timepicker [(ngModel)]="time"  [seconds]="true" [hourStep]="hourStep" [minuteStep]="minuteStep" [secondStep]="secondStep" [ngModelOptions]="{standalone: true}"></ngb-timepicker>	
+									</div>
+								</div>
+						</div>
+	
+						<div class="kt-section">
+								<div class="kt-section__content">		    
+									<div [formGroup]="myGroup">
+										<label for="workingstart">Working Finish</label>
+										<!-- <input formControlName="firstName"> -->
+										<ngb-timepicker [(ngModel)]="time"  [seconds]="true" [hourStep]="hourStep" [minuteStep]="minuteStep" [secondStep]="secondStep" [ngModelOptions]="{standalone: true}"></ngb-timepicker>	
+									</div>
+								</div>
+						</div>
+				</div>
+				<div class="col-lg-6 kt-margin-bottom-20-mobile">
+						<div class="kt-section">
+								<div class="kt-section__content">		    
+									<div [formGroup]="myGroup">
+										<label for="workingstart">Optional 1 Break Time start</label>
+										<!-- <input formControlName="firstName"> -->
+										<ngb-timepicker [(ngModel)]="time"  [seconds]="true" [hourStep]="hourStep" [minuteStep]="minuteStep" [secondStep]="secondStep" [ngModelOptions]="{standalone: true}"></ngb-timepicker>	
+									</div>
+								</div>
+						</div>
+	
+						<div class="kt-section">
+								<div class="kt-section__content">		    
+									<div [formGroup]="myGroup">
+										<label for="workingstart">Optional 1 Break Time Finish</label>
+										<!-- <input formControlName="firstName"> -->
+										<ngb-timepicker [(ngModel)]="time"  [seconds]="true" [hourStep]="hourStep" [minuteStep]="minuteStep" [secondStep]="secondStep" [ngModelOptions]="{standalone: true}"></ngb-timepicker>	
+									</div>
+								</div>
+						</div>
+	
+						<div class="kt-section">
+								<div class="kt-section__content">		    
+									<div [formGroup]="myGroup">
+										<label for="workingstart">Optional 2 Break Time start</label>
+										<!-- <input formControlName="firstName"> -->
+										<ngb-timepicker [(ngModel)]="time"  [seconds]="true" [hourStep]="hourStep" [minuteStep]="minuteStep" [secondStep]="secondStep" [ngModelOptions]="{standalone: true}"></ngb-timepicker>	
+									</div>
+								</div>
+						</div>
+	
+						<div class="kt-section">
+								<div class="kt-section__content">		    
+									<div [formGroup]="myGroup">
+										<label for="workingstart">Optional 2 Break Time Finish</label>
+										<!-- <input formControlName="firstName"> -->
+										<ngb-timepicker [(ngModel)]="time"  [seconds]="true" [hourStep]="hourStep" [minuteStep]="minuteStep" [secondStep]="secondStep" [ngModelOptions]="{standalone: true}"></ngb-timepicker>	
+									</div>
+								</div>
+						</div>
 				</div>
 			</div>
 		</div>

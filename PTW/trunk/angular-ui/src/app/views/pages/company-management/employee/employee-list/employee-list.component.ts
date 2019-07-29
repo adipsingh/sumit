@@ -41,7 +41,7 @@ import {
 	UsersPageRequested,
 	selectUserById,
 	selectAllRoles
-} from '../../../../../core/auth';
+} from '../../../../../core/employee';
 import { SubheaderService } from '../../../../../core/_base/layout';
 
 // Table with EDIT item in MODAL
@@ -59,7 +59,7 @@ import { SubheaderService } from '../../../../../core/_base/layout';
 export class EmployeeListComponent implements OnInit, OnDestroy {
 	// Table fields
 	dataSource: UsersDataSource;
-	displayedColumns = ['select', 'id', 'username', 'email', 'fullname', '_roles', 'actions'];
+	displayedColumns = ['select', 'id', 'firstname',  'lastname', 'email', 'phonenumber', 'actions'];
 	@ViewChild(MatPaginator) paginator: MatPaginator;
 	@ViewChild('sort1') sort: MatSort;
 	// Filter fields

@@ -43,6 +43,9 @@ import { LayoutConfigService, LayoutRefService, MenuAsideService, MenuConfigServ
 // Auth
 import { AuthModule } from './views/pages/auth/auth.module';
 import { AuthService, PermissionEffects, permissionsReducer, RoleEffects, rolesReducer } from './core/auth';
+import { Categoryervice } from './core/pcwbs-def-area';
+import { FunctionService } from './core/functions';
+import { EmployeeService } from './core/employee';
 // CRUD
 import { HttpUtilsService, LayoutUtilsService, TypesUtilsService } from './core/_base/crud';
 // Config
@@ -53,9 +56,10 @@ import * as typescript from 'highlight.js/lib/languages/typescript';
 import * as scss from 'highlight.js/lib/languages/scss';
 import * as xml from 'highlight.js/lib/languages/xml';
 import * as json from 'highlight.js/lib/languages/json';
-import { AbcComponent } from './abc/abc.component';
+import { from } from 'rxjs';
 
-
+import {MatDialogModule} from '@angular/material/dialog';
+import { MethodService } from './core/method-statement';
 
 // tslint:disable-next-line:class-name
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
@@ -84,7 +88,7 @@ export function hljsLanguages(): HighlightLanguage[] {
 }
 
 @NgModule({
-	declarations: [AppComponent, AbcComponent],
+	declarations: [AppComponent],
 	imports: [
 		BrowserAnimationsModule,
 		MaterialFileInputModule,
@@ -104,7 +108,7 @@ export function hljsLanguages(): HighlightLanguage[] {
 		StoreRouterConnectingModule.forRoot({stateKey: 'router'}),
 		StoreDevtoolsModule.instrument(),
 		AuthModule.forRoot(),
-		
+		MatDialogModule,
 		NgbModule,
 		TranslateModule.forRoot(),
 		MatProgressSpinnerModule,
@@ -112,7 +116,11 @@ export function hljsLanguages(): HighlightLanguage[] {
 	],
 	exports: [],
 	providers: [
-		AuthService,		
+		AuthService,
+		Categoryervice,
+		FunctionService,
+		EmployeeService,
+		MethodService,		
 		LayoutConfigService,
 		LayoutRefService,
 		MenuConfigService,

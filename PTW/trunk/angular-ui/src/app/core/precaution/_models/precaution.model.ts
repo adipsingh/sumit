@@ -2,8 +2,10 @@ import { BaseModel } from '../../_base/crud';
 
 export class PrecautionQAModel  extends BaseModel {
 
-	id: number;
+	
+	precautionTypeID : number;
 	question: string;
+	precautionType:string;
 	
 
 	clear() {

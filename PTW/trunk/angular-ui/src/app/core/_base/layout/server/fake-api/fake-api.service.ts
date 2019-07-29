@@ -6,6 +6,9 @@ import { InMemoryDbService } from 'angular-in-memory-web-api';
 import { Observable } from 'rxjs';
 // Auth
 import { AuthDataContext } from '../../../../auth';
+import { FunctionDataContext } from '../../../../functions';
+import { EmployeeDataContext } from '../../../../employee';
+
 // ECommerce
 import { ECommerceDataContext } from '../../../../certificateqa';
 import{CompanyDataContext}from '../../../../e-commerce'
@@ -13,8 +16,8 @@ import{CompanyDataContext}from '../../../../e-commerce'
 import { CarsDb } from './fake-db/cars';
 import{CertificateQADataContext}from '../../../../certificate-qa'
 import{CompanyDetailsContext}from '../../../../company';
-
-
+import{areaDataContext} from '../../../../pcwbs-def-area';
+import{methodDataContext} from '../../../../method-statement';
 
 @Injectable()
 export class  FakeApiService implements InMemoryDbService {
@@ -33,7 +36,8 @@ export class  FakeApiService implements InMemoryDbService {
 			users: AuthDataContext.users,
 			roles: AuthDataContext.roles,
 			permissions: AuthDataContext.permissions,
-
+			function:FunctionDataContext.function,
+			employes:EmployeeDataContext.employes,
 			// e-commerce
 			// customers
 			certificateQuestions: ECommerceDataContext.questions,
@@ -45,10 +49,15 @@ export class  FakeApiService implements InMemoryDbService {
 
 			// orders
 			orders: CompanyDataContext.orders,
+
+			// campany-table
 			companys:CompanyDetailsContext.companys,
 
-			// data-table
-			//questions:QuestionsDb.questions
+			// area-table
+			area:areaDataContext.area,
+
+			// method-statement
+			methods:methodDataContext.methods
 		};
 		return db;
 	}

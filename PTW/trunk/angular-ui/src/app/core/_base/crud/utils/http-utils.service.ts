@@ -30,7 +30,7 @@ export class HttpUtilsService {
 	 */
 	getHTTPHeaders(): HttpHeaders {
 		const result = new HttpHeaders();
-		result.set('Content-Type', 'application/json');
+		result.set('Content-Type', 'application/json'); 
 		return result;
 	}
 

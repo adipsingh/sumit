@@ -65,7 +65,8 @@ import {
 	MatAutocompleteModule,
 	MAT_DIALOG_DEFAULT_OPTIONS,
 	MatSnackBarModule,
-	MatTooltipModule
+	MatTooltipModule,
+	MatListModule
 } from '@angular/material';
 import { environment } from '../../../../environments/environment';
 import { CoreModule } from '../../../core/core.module';
@@ -102,6 +103,7 @@ const routes: Routes = [
 		CommonModule,
 		HttpClientModule,
 		PartialsModule,
+		MatListModule,
 		NgxPermissionsModule.forChild(),
 		RouterModule.forChild(routes),
 		FormsModule,

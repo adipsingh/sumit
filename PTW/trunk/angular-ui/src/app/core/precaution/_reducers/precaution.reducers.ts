@@ -2,51 +2,54 @@
 import { createFeatureSelector } from '@ngrx/store';
 import { EntityState, EntityAdapter, createEntityAdapter, Update } from '@ngrx/entity';
 // Actions
-import { CustomerActions, CustomerActionTypes } from '../_actions/precaution.actions';
+import {  PrecautionQAActions, PrecautionQAActionTypes } from '../_actions/precaution.actions';
 // Models
 import { PrecautionQAModel } from '../_models/precaution.model';
 import { QueryParamsModel } from '../../_base/crud';
 
-export interface CustomersState extends EntityState<PrecautionQAModel> {
+export interface PrecautionQAState extends EntityState<PrecautionQAModel> {
     listLoading: boolean;
     actionsloading: boolean;
     totalCount: number;
-    lastCreatedCustomerId: number;
+   // lastCreatedQuestionId: number;
     lastQuery: QueryParamsModel;
     showInitWaitingMessage: boolean;
 }
 
 export const adapter: EntityAdapter<PrecautionQAModel> = createEntityAdapter<PrecautionQAModel>();
 
-export const initialCustomersState: CustomersState = adapter.getInitialState({
-    customerForEdit: null,
+export const initialPrecautionState: PrecautionQAState = adapter.getInitialState({
+    //QuestionForEdit: null,
     listLoading: false,
     actionsloading: false,
     totalCount: 0,
-    lastCreatedCustomerId: undefined,
+    //lastCreatedQuestionId: undefined,
     lastQuery: new QueryParamsModel({}),
     showInitWaitingMessage: true
 });
 
-export function customersReducer(state = initialCustomersState, action: CustomerActions): CustomersState {
+export function PrecautionQAReducer(state = initialPrecautionState, action: PrecautionQAActions): PrecautionQAState {
     switch  (action.type) {
-        case CustomerActionTypes.CustomersPageToggleLoading: {
+        case PrecautionQAActionTypes.PrecautionQAPageToggleLoading: {
             return {
-                ...state, listLoading: action.payload.isLoading, lastCreatedCustomerId: undefined
+                ...state, listLoading: action.payload.isLoading, //lastCreatedQuestionId: undefined
             };
         }
-        case CustomerActionTypes.CustomerActionToggleLoading: {
+        case PrecautionQAActionTypes.PrecautionQAActionToggleLoading: {
             return {
                 ...state, actionsloading: action.payload.isLoading
             };
         }
-        case CustomerActionTypes.CustomerOnServerCreated: return {
+        case PrecautionQAActionTypes.PrecautionQAOnServerCreated: return {
             ...state
         };
-        case CustomerActionTypes.CustomerCreated: return adapter.addOne(action.payload.customer, {
-            ...state, lastCreatedCustomerId: action.payload.customer.id
+        case PrecautionQAActionTypes.PrecautionQACreated: return adapter.addOne(action.payload.question, {
+            ...state, lastCreatedQuestionId: action.payload.question.id
         });
-        case CustomerActionTypes.CustomerUpdated: return adapter.updateOne(action.payload.partialCustomer, state);
+        // case PrecautionQAActionTypes.PrecautionQAPageRequested: return adapter.getSelectors(action.payload.question, {
+        //     ...state, lastCreatedQuestionId: action.payload.question.id
+        // });
+        case PrecautionQAActionTypes.PrecautionQAUpdated: return adapter.updateOne(action.payload.partialQuestion, state);
         // case CustomerActionTypes.CustomersStatusUpdated: {
         //     const _partialCustomers: Update<CustomerModel>[] = [];
         //     // tslint:disable-next-line:prefer-const
@@ -60,16 +63,16 @@ export function customersReducer(state = initialCustomersState, action: Customer
         //     }
         //     return adapter.updateMany(_partialCustomers, state);
         // }
-        case CustomerActionTypes.OneCustomerDeleted: return adapter.removeOne(action.payload.id, state);
-        case CustomerActionTypes.ManyCustomersDeleted: return adapter.removeMany(action.payload.ids, state);
-        case CustomerActionTypes.CustomersPageCancelled: {
+        case PrecautionQAActionTypes.OnePrecautionQADeleted: return adapter.removeOne(action.payload.id, state);
+        case PrecautionQAActionTypes.ManyPrecautionQAsDeleted: return adapter.removeMany(action.payload.ids, state);
+        case PrecautionQAActionTypes.PrecautionQAPageCancelled: {
             return {
                 ...state, listLoading: false, lastQuery: new QueryParamsModel({})
             };
         }
-        case CustomerActionTypes.CustomersPageLoaded: {
-            return adapter.addMany(action.payload.customers, {
-                ...initialCustomersState,
+        case PrecautionQAActionTypes.PrecautionQAPageLoaded: {
+            return adapter.addMany(action.payload.questions, {
+                ...initialPrecautionState,
                 totalCount: action.payload.totalCount,
                 listLoading: false,
                 lastQuery: action.payload.page,
@@ -80,7 +83,7 @@ export function customersReducer(state = initialCustomersState, action: Customer
     }
 }
 
-export const getCustomerState = createFeatureSelector<PrecautionQAModel>('certificateQuestions');
+export const getQuestionState = createFeatureSelector<PrecautionQAModel>('certificateQuestions');
 
 export const {
     selectAll,

@@ -15,5 +15,7 @@ namespace MODS.PTW.Models
         public string ModifiedBy { get; set; }
         public Nullable<DateTime> ModifiedOn { get; set; }
         public Nullable<bool> Status { get; set; }
+        public Nullable<bool> IsCertificateQA { get; set; }
+        public ICollection<CertificateQuestion> CertificateQuestions { get; set; }
     }
 }

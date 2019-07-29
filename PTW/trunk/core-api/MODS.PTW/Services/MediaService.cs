@@ -21,7 +21,7 @@ namespace MODS.PTW.Services
             _context = context;
         }
 
-        public async Task<string> create(Media media)
+        public Media create(Media media)
         {
             // string filename;
             // var Ext = "." + media.Name.Split('.')[media.Name.Split('.').Length - 1];
@@ -34,8 +34,8 @@ namespace MODS.PTW.Services
 
             Media imagefile = media;
             //imagefile.Name = filename;
-           // imagefile.Path = path;
-           // imagefile.Extention = "." + media.FileName.Split('.')[media.FileName.Split('.').Length - 1];
+            // imagefile.Path = path;
+            // imagefile.Extention = "." + media.FileName.Split('.')[media.FileName.Split('.').Length - 1];
             imagefile.UploadedOn = DateTime.Now;
             //if (media.Length > 0)
             //{
@@ -56,10 +56,10 @@ namespace MODS.PTW.Services
 
             //}
             _context.Media.Add(imagefile);
-            _context.SaveChangesAsync();
+            _context.SaveChanges();
 
-            return media.Name;
-            
+            return imagefile;
+
         }
 
         public Media delete(int id)
@@ -70,44 +70,109 @@ namespace MODS.PTW.Services
             return data;
         }
 
-        public Media Download(int id)
+        public Media Download(int? id)
         {
-            throw new NotImplementedException();
+            var media = (from data in _context.Media
+                         where data.ID == id
+                         select data).FirstOrDefault();
+            return media;
         }
+
+
 
         public Media update(Media media, int id)
         {
             var file = (from x in _context.Media
                         where x.ID == id
-                         select x).FirstOrDefault();
-            if (_context.Media.Any(x => x.Name == media.Name))
-            {
-                throw new AppException("media is already Exists");
-            }
-            if (string.IsNullOrEmpty(media.Name))
-            {
-                throw new ArgumentException("media Name Should not be empty");
-            }
+                        select x).FirstOrDefault();
             if (file.ID == id)
             {
-                file.Name = media.Name;
-            }
+
+                if (_context.Media.Any(x => x.Name == media.Name))
+                {
+                    throw new AppException("media is already Exists");
+                }
+                if (!string.IsNullOrEmpty(media.Name))
+                {
+                    file.Name = media.Name;
+                }
+                else
+                {
+                    file.Name = file.Name;
+                }
+
+                if (!string.IsNullOrEmpty(media.Body))
+                {
+                    file.Body = media.Body;
+                }
+                else
+                {
+                    file.Body = file.Body;
+                }
+
+                if (!string.IsNullOrEmpty(media.FileType))
+                {
+                    file.FileType = media.FileType;
+                }
+                else
+                {
+                    file.FileType = file.FileType;
+                }
+
+                if (!string.IsNullOrEmpty(media.Extention))
+                {
+                    file.Extention = media.Extention;
+                }
+                else
+                {
+                    file.Extention = file.Extention;
+                }
+
+                if (!string.IsNullOrEmpty(media.Path))
+                {
+                    file.Path = media.Path;
+                }
+                else
+                {
+                    file.Path = file.Path;
+                }
+
+                if (!string.IsNullOrEmpty(media.Height))
+                {
+                    file.Height = media.Height;
+                }
+                else
+                {
+                    file.Height = file.Height;
+                }
+
+                if (!string.IsNullOrEmpty(media.Width))
+                {
+                    file.Width = media.Width;
+                }
+                else
+                {
+                    file.Width = file.Width;
+                }
+
+                if (!string.IsNullOrEmpty(media.Length))
+                {
+                    file.Length = media.Length;
+                }
+                else
+                {
+                    file.Length = file.Length;
+                }
+                file.UploadedOn = DateTime.Now;
+                file.UploadedBy = media.UploadedBy;
+            }       
             _context.Media.Update(file);
             _context.SaveChanges();
 
             return file;
         }
 
-        public Task<IActionResult> Upload(Media formFile)
-        {
-            //string filename;
 
-            //    var Ext = "." + formFile.FileName.Split('.')[formFile.FileName.Split('.').Length - 1];
-            //    filename = formFile.FileName;
-            //    var path = Path.Combine(Directory.GetCurrentDirectory(), "Media",filename);
-            throw new NotImplementedException();
-
-        }
 
 
 
@@ -192,7 +257,7 @@ namespace MODS.PTW.Services
 
 
 
-                
-       
+
+
     }
 }

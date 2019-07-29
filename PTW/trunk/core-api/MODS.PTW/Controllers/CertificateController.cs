@@ -24,13 +24,13 @@ namespace MODS.PTW.Controllers
             _mapper = mapper;
         }
 
-        [HttpPost("Add")]
+        [HttpPost("add")]
         public IActionResult AddCertificate([FromBody]CertificateDto certificateDto)
         {
             var certificate = _mapper.Map<Certificate>(certificateDto);
             try
             {
-                var data=_service.create(certificate);
+                var data=_service.Create(certificate);
                 return Ok(data);
             }
             catch (AppException ex)
@@ -45,7 +45,7 @@ namespace MODS.PTW.Controllers
             var certificate = _mapper.Map<Certificate>(certificateDto);
             try
             {
-                var data = _service.update(certificate, id);
+                var data = _service.Update(certificate, id);
                 return Ok(data);
             }
             catch (AppException ex)
@@ -55,8 +55,8 @@ namespace MODS.PTW.Controllers
         }
 
 
-        [HttpGet("All")]
-        public IActionResult GetAllCertificate()
+        [HttpGet("all")]
+        public IActionResult GetAllCertificates()
         {
             var certificate = _service.GetAllCertificate();
             List<CertificateDto> Dto = new List<CertificateDto>();
@@ -69,7 +69,7 @@ namespace MODS.PTW.Controllers
         }
 
 
-        [HttpGet("getcertificate/{id}")]
+        [HttpGet("get/{id}")]
         ///TODO- need to add this profile fields in db and api
         public IActionResult GetCertificateByID(int id)
         {
@@ -85,7 +85,8 @@ namespace MODS.PTW.Controllers
                 CreatedOn=certificate.CreatedOn,
                 ModifiedBy=certificate.ModifiedBy,
                 ModifiedOn=certificate.ModifiedOn,
-                Status=certificate.Status
+                Status=certificate.Status,
+                IsCertificateQA = certificate.IsCertificateQA
 
             };
             return Ok(certificateDto);
@@ -103,6 +104,27 @@ namespace MODS.PTW.Controllers
             {
                 return BadRequest(new { message = ex.Message });
             }
+        }
+
+
+        [HttpGet("allQACertificates")]
+        public IActionResult GetAllQACertificates()
+        {
+            var certificate = _service.GetAllCertificate();
+            List<CertificateGetAllDto> Dto = new List<CertificateGetAllDto>();
+            foreach (var item in certificate)
+            {
+                if (item.IsCertificateQA == true)
+                {
+                    CertificateGetAllDto Dtos = new CertificateGetAllDto()
+                    {
+                        ID = item.ID,
+                        Name = item.Name
+                    };
+                    Dto.Add(Dtos);
+                }
+            }
+            return Ok(Dto);
         }
     }
 }

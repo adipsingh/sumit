@@ -1,5 +1,5 @@
 // Angular
-import { Component, OnInit,  ChangeDetectionStrategy, OnDestroy, Inject } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, OnDestroy, Inject } from '@angular/core';
 
 import { MatPaginator, MatSort, MatDialog, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
@@ -23,15 +23,19 @@ import {
 	ProductsStatusUpdated,
 	selectProductsPageLastQuery
 } from '../../../../core/e-commerce';
-import { PrecautionQAModel, selectCustomersActionLoading, CustomerUpdated, CustomerOnServerCreated, selectLastCreatedCustomerId } from '../../../../core/precaution';
+import {
+	PrecautionQAModel,
+	// SelectPrecautionQAActionLoading,
+	PrecautionQAUpdated, PrecautionQAOnServerCreated, selectLastCreatedPrecautionQAId
+} from '../../../../core/precaution';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Update } from '@ngrx/entity';
 
 
 @Component({
 	// tslint:disable-next-line:component-selector
-  selector: 'kt-question-edit',
-  templateUrl: './question-edit.component.html',
+	selector: 'kt-question-edit',
+	templateUrl: './question-edit.component.html',
 	changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PrecautionEditDialogeComponent implements OnInit, OnDestroy {
@@ -66,7 +70,7 @@ export class PrecautionEditDialogeComponent implements OnInit, OnDestroy {
 	 * On init
 	 */
 	ngOnInit() {
-		this.store.pipe(select(selectCustomersActionLoading)).subscribe(res => this.viewLoading = res);
+		//	this.store.pipe(select(selectPrecautionQAActionLoading)).subscribe(res => this.viewLoading = res);
 		this.precaution = this.data.customer;
 		this.createForm();
 	}
@@ -115,9 +119,8 @@ export class PrecautionEditDialogeComponent implements OnInit, OnDestroy {
 	prepareCustomer(): PrecautionQAModel {
 		const controls = this.QuestionForm.controls;
 		const _que = new PrecautionQAModel();
-		_que.id = this.precaution.id;		
+		_que.id = this.precaution.id;
 		_que.question = controls['question'].value;
-			
 		return _que;
 	}
 
@@ -155,9 +158,9 @@ export class PrecautionEditDialogeComponent implements OnInit, OnDestroy {
 			id: _customer.id,
 			changes: _customer
 		};
-		this.store.dispatch(new CustomerUpdated({
-			partialCustomer: updateCustomer,
-			customer: _customer
+		this.store.dispatch(new PrecautionQAUpdated({
+			partialQuestion: updateCustomer,
+			question: _customer
 		}));
 
 		// Remove this line
@@ -172,9 +175,9 @@ export class PrecautionEditDialogeComponent implements OnInit, OnDestroy {
 	 * @param _customer: CustomerModel
 	 */
 	createCustomer(_customer: PrecautionQAModel) {
-		this.store.dispatch(new CustomerOnServerCreated({ customer: _customer }));
+		this.store.dispatch(new PrecautionQAOnServerCreated({ question: _customer }));
 		this.subscriptions = this.store.pipe(
-			select(selectLastCreatedCustomerId),
+			select(selectLastCreatedPrecautionQAId),
 			delay(1000), // Remove this line
 		).subscribe(res => {
 			if (!res) {

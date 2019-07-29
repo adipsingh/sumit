@@ -109,7 +109,7 @@ import {
 } from '@angular/material';
 import { environment } from '../../../../environments/environment';
 import { CoreModule } from '../../../core/core.module';
-import { NgbProgressbarModule, NgbProgressbarConfig, NgbTimeStruct } from '@ng-bootstrap/ng-bootstrap';
+import { NgbProgressbarModule, NgbProgressbarConfig, NgbTimeStruct, NgbAlertConfig, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgxPermissionsModule } from 'ngx-permissions';
 
 
@@ -184,7 +184,8 @@ const routes: Routes = [
 		MatSnackBarModule,
 		MatTabsModule,
 		MatTooltipModule,
-    NgbProgressbarModule,
+	NgbProgressbarModule,
+	NgbModule,
     
 		environment.isMockEnabled ? HttpClientInMemoryWebApiModule.forFeature(FakeApiService, {
 			passThruUnknownUrl: true,
@@ -224,7 +225,8 @@ const routes: Routes = [
 		ProductSpecificationsService,
 		ProductsService,
 		TypesUtilsService,
-		LayoutUtilsService
+		LayoutUtilsService,
+		NgbAlertConfig
 	],
 	entryComponents: [
 		ActionNotificationComponent,

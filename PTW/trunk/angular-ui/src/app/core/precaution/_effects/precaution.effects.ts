@@ -10,59 +10,62 @@ import { Store } from '@ngrx/store';
 // CRUD
 import { QueryResultsModel } from '../../_base/crud';
 // Services
-import { CustomersService } from '../_services/';
+import { PrecautionQAService } from '../_services/';
 // State
 import { AppState } from '../../../core/reducers';
 // Actions
 import {
-    CustomerActionTypes,
-    CustomersPageRequested,
-    CustomersPageLoaded,
-    ManyCustomersDeleted,
-    OneCustomerDeleted,
-    CustomerActionToggleLoading,
-    CustomersPageToggleLoading,
-    CustomerUpdated,
-    CustomersStatusUpdated,
-    CustomerCreated,
-    CustomerOnServerCreated
+    PrecautionQAActionTypes,
+    PrecautionQAPageRequested,
+    PrecautionQAPageLoaded,
+    ManyPrecautionQADeleted,
+    OnePrecautionQADeleted,
+    PrecautionQAActionToggleLoading,
+    PrecautionQAPageToggleLoading,
+    PrecautionQAUpdated,
+    PrecautionQAStatusUpdated,
+    PrecautionQACreated,
+    PrecautionQAOnServerCreated
 } from '../_actions/precaution.actions';
 import { of } from 'rxjs';
 
 @Injectable()
-export class CustomerEffects {
-    showPageLoadingDistpatcher = new CustomersPageToggleLoading({ isLoading: true });
-    showActionLoadingDistpatcher = new CustomerActionToggleLoading({ isLoading: true });
-    hideActionLoadingDistpatcher = new CustomerActionToggleLoading({ isLoading: false });
+export class PrecautionQAEffects {
+    showPageLoadingDistpatcher = new PrecautionQAPageToggleLoading({ isLoading: true });
+    showActionLoadingDistpatcher = new PrecautionQAActionToggleLoading({ isLoading: true });
+    hideActionLoadingDistpatcher = new PrecautionQAActionToggleLoading({ isLoading: false });
+
+    constructor(private actions$: Actions, private precautionQAService: PrecautionQAService, private store: Store<AppState>) { }
 
     @Effect()
-    loadCustomersPage$ = this.actions$.pipe(
-        ofType<CustomersPageRequested>(CustomerActionTypes.CustomersPageRequested),
-        mergeMap(( { payload } ) => {
-            this.store.dispatch(this.showPageLoadingDistpatcher);
-            const requestToServer = this.customersService.findCustomers(payload.page);
-            const lastQuery = of(payload.page);
-            return forkJoin(requestToServer, lastQuery);
-        }),
-        map(response => {
-            const result: QueryResultsModel = response[0];
-            const lastQuery: QueryParamsModel = response[1];
-            const pageLoadedDispatch = new CustomersPageLoaded({
-                customers: result.items,
-                totalCount: result.totalCount,
-                page: lastQuery
-            });
-            return pageLoadedDispatch;
-        })
-    );
+    // loadPrecautionQAPage$ = this.actions$.pipe(
+    //     ofType<PrecautionQAPageRequested>(PrecautionQAActionTypes.PrecautionQAPageRequested),
+    //     mergeMap(( {payload} ) => {
+    //         this.store.dispatch(this.showPageLoadingDistpatcher);
+    //         const requestToServer =this.precautionQAService.getAllQuestions();// findQuestions(payload.page);
+    //         const lastQuery = of(payload.page);
+    //         return forkJoin(requestToServer, lastQuery);
+    //        return requestToServer;
+    //     }),
+    //     map(response => {
+    //         const result: QueryResultsModel = response;
+    //       //  const lastQuery: QueryParamsModel = response[1];
+    //         const pageLoadedDispatch = new PrecautionQAPageLoaded({
+    //            // questions: response[0],
+    //             totalCount: result.totalCount,
+    //            // page: lastQuery
+    //         });
+    //         return pageLoadedDispatch;
+    //     })
+    // );
 
     @Effect()
-    deleteCustomer$ = this.actions$
+    deleteQuestion$ = this.actions$
         .pipe(
-            ofType<OneCustomerDeleted>(CustomerActionTypes.OneCustomerDeleted),
+            ofType<OnePrecautionQADeleted>(PrecautionQAActionTypes.OnePrecautionQADeleted),
             mergeMap(( { payload } ) => {
                     this.store.dispatch(this.showActionLoadingDistpatcher);
-                    return this.customersService.deleteCustomer(payload.id);
+                    return this.precautionQAService.deleteQuestion(payload.id);
                 }
             ),
             map(() => {
@@ -71,12 +74,12 @@ export class CustomerEffects {
         );
 
     @Effect()
-    deleteCustomers$ = this.actions$
+    deleteQuestions$ = this.actions$
         .pipe(
-            ofType<ManyCustomersDeleted>(CustomerActionTypes.ManyCustomersDeleted),
+            ofType<ManyPrecautionQADeleted>(PrecautionQAActionTypes.ManyPrecautionQAsDeleted),
             mergeMap(( { payload } ) => {
                     this.store.dispatch(this.showActionLoadingDistpatcher);
-                    return this.customersService.deleteCustomers(payload.ids);
+                    return this.precautionQAService.deleteQuestions(payload.ids);
                 }
             ),
             map(() => {
@@ -85,12 +88,12 @@ export class CustomerEffects {
         );
 
     @Effect()
-    updateCustomer$ = this.actions$
+    updateQuestion$ = this.actions$
         .pipe(
-            ofType<CustomerUpdated>(CustomerActionTypes.CustomerUpdated),
+            ofType<PrecautionQAUpdated>(PrecautionQAActionTypes.PrecautionQAUpdated),
             mergeMap(( { payload } ) => {
                 this.store.dispatch(this.showActionLoadingDistpatcher);
-                return this.customersService.updateCustomer(payload.customer);
+                return this.precautionQAService.updateQuestion(payload.question);
             }),
             map(() => {
                 return this.hideActionLoadingDistpatcher;
@@ -98,12 +101,12 @@ export class CustomerEffects {
         );
 
     @Effect()
-    updateCustomersStatus$ = this.actions$
+    updateQuestionsStatus$ = this.actions$
         .pipe(
-            ofType<CustomersStatusUpdated>(CustomerActionTypes.CustomersStatusUpdated),
+            ofType<PrecautionQAStatusUpdated>(PrecautionQAActionTypes.PrecautionQAStatusUpdated),
             mergeMap(( { payload } ) => {
                 this.store.dispatch(this.showActionLoadingDistpatcher);
-                return this.customersService.updateStatusForCustomer(payload.customers, payload.status);
+                return this.precautionQAService.updateStatusForQuestion(payload.questions, payload.status);
             }),
             map(() => {
                 return this.hideActionLoadingDistpatcher;
@@ -111,14 +114,14 @@ export class CustomerEffects {
         );
 
     @Effect()
-    createCustomer$ = this.actions$
+    createQuestion$ = this.actions$
         .pipe(
-            ofType<CustomerOnServerCreated>(CustomerActionTypes.CustomerOnServerCreated),
+            ofType<PrecautionQAOnServerCreated>(PrecautionQAActionTypes.PrecautionQAOnServerCreated),
             mergeMap(( { payload } ) => {
                 this.store.dispatch(this.showActionLoadingDistpatcher);
-                return this.customersService.createCustomer(payload.customer).pipe(
+                return this.precautionQAService.createPrecautionQA(payload.question).pipe(
                     tap(res => {
-                        this.store.dispatch(new CustomerCreated({ customer: res }));
+                        this.store.dispatch(new PrecautionQACreated({ question: res }));
                     })
                 );
             }),
@@ -127,5 +130,5 @@ export class CustomerEffects {
             }),
         );
 
-    constructor(private actions$: Actions, private customersService: CustomersService, private store: Store<AppState>) { }
+    
 }

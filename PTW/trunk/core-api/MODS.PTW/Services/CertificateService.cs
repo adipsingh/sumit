@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using MODS.PTW.Helpers;
 using MODS.PTW.Models;
 
@@ -14,13 +15,13 @@ namespace MODS.PTW.Services
         {
             _context = context;
         }
-        public Certificate create(Certificate certificate)
+        public Certificate Create(Certificate certificate)
         {
             if (string.IsNullOrEmpty(certificate.Name))
             {
                 throw new ArgumentException("Certificate Name should not be empty ");
             }
-            if (_context.Certificate.Any(x => x.Name == certificate.Name))
+            if (_context.Certificates.Any(x => x.Name == certificate.Name))
             {
                 throw new AppException("Certificate name is already Exists");
             }
@@ -34,7 +35,7 @@ namespace MODS.PTW.Services
                 certificate.ModifiedOn = DateTime.Now;
             }
 
-            _context.Certificate.Add(certificate);
+            _context.Certificates.Add(certificate);
             _context.SaveChanges();
 
             return certificate;
@@ -42,28 +43,31 @@ namespace MODS.PTW.Services
 
         public Certificate Delete(int id)
         {
-            var data = _context.Certificate.Find(id);
-            _context.Certificate.Remove(data);
+            var data = _context.Certificates.Find(id);
+            _context.Certificates.Remove(data);
             _context.SaveChanges();
             return data;
         }
 
         public List<Certificate> GetAllCertificate()
         {
-            return _context.Certificate.ToList();
+         
+            var data = (from x in _context.Certificates
+                        select x).Include(x => x.CertificateQuestions).ToList();
+            return data;
         }
 
         public Certificate GetById(int id)
         {
-            return _context.Certificate.Find(id);
+            return _context.Certificates.Find(id);
         }
 
-        public Certificate update(Certificate certificate, int id)
+        public Certificate Update(Certificate certificate, int id)
         {
-            var certi = (from x in _context.Certificate
+            var certi = (from x in _context.Certificates
                          where x.ID == id
                        select x).FirstOrDefault();
-            if (_context.Certificate.Any(x => x.Name == certificate.Name))
+            if (_context.Certificates.Any(x => x.Name == certificate.Name))
             {
                 throw new AppException("Certificate name is already Exists");
             }
@@ -101,10 +105,11 @@ namespace MODS.PTW.Services
                     certi.ModifiedOn = DateTime.Now;
                 }
                 
-                certi.Status = certificate.Status;                
+                certi.Status = certificate.Status;
+                certi.IsCertificateQA = certificate.IsCertificateQA;
             }
 
-            _context.Certificate.Update(certi);
+            _context.Certificates.Update(certi);
             _context.SaveChanges();
 
             return certi;

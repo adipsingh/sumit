@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MODS.PTW.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -15,5 +16,7 @@ namespace MODS.PTW.Dtos
         public string ModifiedBy { get; set; }
         public Nullable<DateTime> ModifiedOn { get; set; }
         public Nullable<bool> Status { get; set; }
+        public Nullable<bool> IsCertificateQA { get; set; }
+        public ICollection<QuestionDto> Questions { get; set; }
     }
 }

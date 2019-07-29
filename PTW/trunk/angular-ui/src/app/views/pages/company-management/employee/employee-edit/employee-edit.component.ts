@@ -37,7 +37,7 @@ import {
 	UserOnServerCreated,
 	selectLastCreatedUserId,
 	selectUsersActionLoading
-} from '../../../../../core/auth';
+} from '../../../../../core/employee';
 
 @Component({
 	selector: 'kt-employee-edit',

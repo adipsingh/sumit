@@ -50,7 +50,7 @@ namespace MODS.PTW.Helpers
     }
    class DimensionalControlHelper
     {
-        private DataContext _context;
+       // private DataContext _context;
         public static OAuth2Token Authenticate(string hostname, string clientId, string clientSecret, string username, string password)
         {
            // String uri = string.Format("https://stw.sf-api.com/oauth/token", hostname);

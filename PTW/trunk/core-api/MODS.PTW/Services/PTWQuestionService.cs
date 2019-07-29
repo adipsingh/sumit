@@ -20,7 +20,7 @@ namespace MODS.PTW.Services
             {
                 throw new ArgumentException("Question Name should not be empty ");
             }
-            if (_context.Functions.Any(x => x.Name == question.Questions))
+            if (_context.PTWSelectionQA.Any(x => x.Questions == question.Questions))
             {
                 throw new AppException("Question name is already Exists");
             }

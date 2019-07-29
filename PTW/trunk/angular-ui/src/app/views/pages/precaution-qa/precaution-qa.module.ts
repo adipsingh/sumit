@@ -41,6 +41,8 @@ import { PartialsModule } from '../../partials/partials.module';
 import { HttpClientModule } from '@angular/common/http';
 import { PrecautionEditDialogeComponent } from './question-edit/question-edit.component';
 import { PrecautionListComponent } from './precaution-list/precaution-list.component';
+import { PrecautionQAService } from '../../../../../src/app/core/precaution';
+import { PrecautionEditDialogComponent } from './precaution-edit-dialog/precaution-edit-dialog.component';
 
 const routes: Routes = [
 	{
@@ -83,7 +85,7 @@ const routes: Routes = [
 	}
 ];
 @NgModule({
-  declarations: [PrecautionQaComponent, PrecautionEditDialogeComponent, PrecautionEditComponent, PrecautionListComponent],
+  declarations: [PrecautionQaComponent, PrecautionEditDialogeComponent, PrecautionEditComponent, PrecautionListComponent, PrecautionEditDialogComponent],
   imports: [
     MatDialogModule,
 		CommonModule,
@@ -125,6 +127,10 @@ const routes: Routes = [
     //     component: PrecautionQaComponent
     //   },
     // ]),
-  ]
+	],
+	providers: [PrecautionQAService, PrecautionEditDialogComponent],
+	entryComponents: [
+		PrecautionEditDialogComponent
+	]
 })
 export class PrecautionQAModule { }

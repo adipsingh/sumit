@@ -9,7 +9,7 @@ import{MatDialogRef, MAT_DIALOG_DATA} from "@angular/material";
 	styleUrls: ['pcwbsdefination.component.scss'],
 })
 export class PCWBSDefinationComponent implements OnInit {
-	area :string[]=['MCMS','Parking Area','Camp A','Camp B'];
+	
     
     ngOnInit() {
        

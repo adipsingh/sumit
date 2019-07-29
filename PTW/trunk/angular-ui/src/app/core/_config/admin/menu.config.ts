@@ -78,7 +78,7 @@ export class MenuConfig {
 				{
 					title: 'Working Hour',
 					root: true,
-					icon: 'flaticon2-expand',
+					icon: 'flaticon-clock-1',
 					page: 'working-hour'
 				},
 				{
@@ -154,14 +154,14 @@ export class MenuConfig {
 							title: 'Section',
 							page: 'company-management/section'
 						},
-						// {
-						// 	title: 'Function',
-						// 	page: 'company-management/function'
-						// },
-						// {
-						// 	title: 'Employee',
-						// 	page: 'company-management/employee'
-						// }
+						{
+							title: 'Function',
+							page: 'company-management/function'
+						},
+						{
+							title: 'Employee',
+							page: 'company-management/employee'
+						}
 					]
 				},
 				// {

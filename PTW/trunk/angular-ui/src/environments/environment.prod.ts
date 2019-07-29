@@ -1,5 +1,5 @@
 export const environment = {
-	baseUrl:"http://114.143.25.202:8215/API/",
+	baseUrl:"http://114.143.25.202:8215/api/",
 	//baseUrl:"http://localhost:5000/api/",
 	production: true,
 	isMockEnabled: true, // You have to switch this, when your real back-end is done

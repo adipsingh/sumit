@@ -8,8 +8,8 @@ namespace MODS.PTW.Services
 {
     public interface ICertificateService
     {
-        Certificate create(Certificate certificate);
-        Certificate update(Certificate certificate, int id);
+        Certificate Create(Certificate certificate);
+        Certificate Update(Certificate certificate, int id);
         Certificate Delete(int id);
         List<Certificate> GetAllCertificate();
         Certificate GetById(int id);

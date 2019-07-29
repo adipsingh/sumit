@@ -1,5 +1,6 @@
 import { BaseModel } from '../../_base/crud';
 
+
 export class CustomerModel  extends BaseModel {
 	// id: number;
 	// firstName: string;
@@ -21,6 +22,9 @@ export class CustomerModel  extends BaseModel {
 	electrical: boolean; 
 	criticalLift: boolean;
 	gratingRemoval: boolean;
+	certificatename:CustomerModel[];
+	isSelected:  boolean;
+	parentId: number;
 
 	clear() {
 		
@@ -32,5 +36,8 @@ export class CustomerModel  extends BaseModel {
 		this.electrical = false;
 		this.criticalLift = false;
 		this.gratingRemoval =false;
+		this.certificatename = [];
+		this.isSelected = false;
+		this.parentId = undefined;
 	}
 }

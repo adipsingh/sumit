@@ -10,6 +10,10 @@ namespace MODS.PTW.Helpers
         {
             CreateMap<User, UserDto>();
             CreateMap<UserDto, User>();
+            CreateMap<Certificate, CertificateDto>();
+            CreateMap<CertificateDto, Certificate>();
+            CreateMap<Question, QuestionDto>();
+            CreateMap<QuestionDto, Question>();
         }
     }
 }

@@ -86,9 +86,17 @@ namespace MODS.PTW
             services.AddScoped<IPTWQuestionService, PTWQuestionService>();
             services.AddScoped<IPTWTypeService, PTWTypeService>();
             services.AddScoped<IPTWQuestiontypeAnsService, PTWQuestionTypeAnsService>();
-            services.AddScoped<ICertificateService, CertificateService>();
+            services.AddScoped<IPrecautionService, PrecautionService>();
+            services.AddScoped<IFwbsService, FwbsService>();
             services.AddScoped<ICertificateAuthorityService, CertificateAuthorityService>();
-            services.AddScoped<ICertificateQAService, CertificateQAService>();
+            services.AddScoped<ICertificateService, CertificateService>();
+            services.AddScoped<IQuestionService, QuestionService>();    
+            services.AddScoped<ICertificateQuestionService, CertificateQuestionService>();
+            services.AddMvc()
+                .AddJsonOptions(
+                    options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+                );
+
 
         }
 

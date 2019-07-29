@@ -2,19 +2,22 @@
 import { Component, OnInit, Inject, ChangeDetectionStrategy, ViewEncapsulation, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 // Material
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA , MatPaginator, MatSort, MatSnackBar, MatDialog} from '@angular/material';
 // RxJS
 import { Subscription, of } from 'rxjs';
-import { delay } from 'rxjs/operators';
+import { delay, take, distinctUntilChanged, skip, find } from 'rxjs/operators';
 // NGRX
 import { Update } from '@ngrx/entity';
 import { Store, select } from '@ngrx/store';
 // State
 import { AppState } from '../../../../../core/reducers';
 // CRUD
-import { TypesUtilsService } from '../../../../../core/_base/crud';
+import { TypesUtilsService, QueryParamsModel } from '../../../../../core/_base/crud';
 // Services and Models
-import { CustomerModel, CustomerUpdated, CustomerOnServerCreated, selectLastCreatedCustomerId, selectCustomersPageLoading, selectCustomersActionLoading } from '../../../../../core/certificateqa';
+import { CustomerModel, CustomerUpdated, CustomerOnServerCreated, selectLastCreatedCustomerId, selectCustomersPageLoading, selectCustomersActionLoading, CustomersService, CustomersDataSource ,CertificatePageRequested} from '../../../../../core/certificateqa';
+import { SelectionModel } from '@angular/cdk/collections';
+// import { CertificatePageRequested } from '../../../../../../../src/app/core/certificateqa/_actions/customer.actions';
+
 
 @Component({
 	// tslint:disable-next-line:component-selector
@@ -24,6 +27,13 @@ import { CustomerModel, CustomerUpdated, CustomerOnServerCreated, selectLastCrea
 	encapsulation: ViewEncapsulation.None
 })
 export class CustomerEditDialogComponent implements OnInit, OnDestroy {
+
+	allSelected = false;
+	//area :string[]=['MCMS','Parking Area','Camp A','Camp B'];
+
+	dataSource: CustomersDataSource;
+	displayedColumns = ['select','id', 'certificatename', 'actions'];
+
 	// Public properties
 	customer: CustomerModel;
 	customerForm: FormGroup;
@@ -31,7 +41,10 @@ export class CustomerEditDialogComponent implements OnInit, OnDestroy {
 	viewLoading: boolean = false;
 	// Private properties
 	private componentSubscriptions: Subscription;
-
+	private subscriptions: Subscription[] = [];
+	public certificateResult: CustomerModel[] = [];
+	
+	selection = new SelectionModel<CustomerModel>(true, []);
 	/**
 	 * Component constructor
 	 *
@@ -44,6 +57,7 @@ export class CustomerEditDialogComponent implements OnInit, OnDestroy {
 	constructor(public dialogRef: MatDialogRef<CustomerEditDialogComponent>,
 		@Inject(MAT_DIALOG_DATA) public data: any,
 		private fb: FormBuilder,
+		private certificate: CustomersService,
 		private store: Store<AppState>,
 		private typesUtilsService: TypesUtilsService) {
 	}
@@ -59,6 +73,21 @@ export class CustomerEditDialogComponent implements OnInit, OnDestroy {
 		this.store.pipe(select(selectCustomersActionLoading)).subscribe(res => this.viewLoading = res);
 		this.customer = this.data.customer;
 		this.createForm();
+		//this.loadCertificateList();
+
+		// Init DataSource
+		this.dataSource = new CustomersDataSource(this.store);
+		const entitiesSubscription = this.dataSource.entitySubject.pipe(
+			skip(1),
+			distinctUntilChanged()
+		).subscribe(res => {
+			this.certificateResult = res;
+		});
+		this.subscriptions.push(entitiesSubscription);
+		// First load
+		of(undefined).pipe(take(1), delay(1000)).subscribe(() => { // Remove this line, just loading imitation
+			this.loadCertificateList();
+		}); // Remove this line, just loading imitation
 	}
 
 	/**
@@ -220,4 +249,102 @@ export class CustomerEditDialogComponent implements OnInit, OnDestroy {
 	onAlertClose($event) {
 		this.hasFormErrors = false;
 	}
+
+
+	/* get all certificate */
+
+	loadCertificateList() {
+		debugger;
+		// this.selection.clear();
+		// const queryParams = new QueryParamsModel(
+			
+		// );
+		this.certificate.getAllCertificate()
+		
+
+		.subscribe(response => 
+			{ 		
+				this.certificateResult = response;
+			}, 
+			err => console.log(err), ()=> console.log(this.certificateResult)
+			);
+
+
+		// Call request from server
+		this.store.dispatch(new CertificatePageRequested());
+		this.selection.clear();
+	}
+
+	masterToggle() {
+		if (this.selection.selected.length === this.certificateResult.length) {
+			this.selection.clear();
+		} else {
+			this.certificateResult.forEach(row => this.selection.select(row));
+		}
+	}
+
+	isAllSelected(): boolean {
+		const numSelected = this.selection.selected.length;
+		const numRows = this.certificateResult.length;
+		return numSelected === numRows;
+	}
+
+	prepareRole(): CustomerModel {
+		const _certificate = new CustomerModel();
+		_certificate.id = this.customer.id;
+		//_certificate.permissions = this.preparePermissionIds();
+		// each(this.assignedRoles, (_role: Role) => _user.roles.push(_role.id));
+		_certificate.question = this.customer.question;
+		_certificate.certificatename = this.customer.certificatename;
+		return _certificate;
+	}
+
+	// isSelectedChanged($event) {
+	// 	for(let i=0; i<this.certificateResult.length; i++) {
+	// 	  this.certificateResult[i].checked = this.allSelected;
+	// 	}
+	//  }
+
+// 	isSelectedChanged($event, certificate: CustomerModel) {
+// 		if (certificate.certificatename.length === 0 && certificate.certificatename) {
+// 			const _root = find(this.certificateResult),(item : CustomerModel) => item.id === certificate.checked );
+// 			// if (_root && !_root.isSelected) {
+// 			// 	_root.isSelected = true;
+// 			// }
+// 			return;
+// 		}
+// }
+
+// isSelectedChanged($event, CustomerModel: CustomerModel) {
+// 	if (CustomerModel.certificatename.length === 0 && CustomerModel.isSelected) {
+// 		const _root = find(this.certificateResult, (item: CustomerModel) => item.id === CustomerModel.parentId);
+// 		if (_root && !_root.isSelected) {
+// 			_root.isSelected = true;
+// 		}
+// 		return;
+// 	}
+
+// 	if (CustomerModel.certificatename.length === 0 && !CustomerModel.isSelected) {
+// 		const _root = find(this.rolePermissions, (item: Permission) => item.id === CustomerModel.parentId);
+// 		if (_root && _root.isSelected) {
+// 			if (!some(_root._children, (item: Permission) => item.isSelected === true)) {
+// 				_root.isSelected = false;
+// 			}
+// 		}
+// 		return;
+// 	}
+
+// 	if (permission._children.length > 0 && permission.isSelected) {
+// 		each(permission._children, (item: Permission) => item.isSelected = true);
+// 		return;
+// 	}
+
+// 	if (permission._children.length > 0 && !permission.isSelected) {
+// 		each(permission._children, (item: Permission) => {
+// 			item.isSelected = false;
+// 		});
+// 		return;
+// 	}
+// }
+
 }

@@ -14,6 +14,7 @@ import { CoreModule } from '../../core/core.module';
 import { ECommerceModule } from './certificate-qa/certificate-qa.module';
 import { QuestionsService } from '../../../../src/app/core/certificate/_services/questions.service';
 
+
 @NgModule({
 	declarations: [],
 	exports: [],
@@ -24,11 +25,9 @@ import { QuestionsService } from '../../../../src/app/core/certificate/_services
 		NgbModule,
 		CoreModule,
 		PartialsModule,
-		ECommerceModule,
-			
+		ECommerceModule
 	],
-	providers: [QuestionsService
-	]
+	providers: [QuestionsService]
 })
 export class PagesModule {
 }

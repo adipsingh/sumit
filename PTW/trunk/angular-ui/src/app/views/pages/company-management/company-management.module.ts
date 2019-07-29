@@ -30,8 +30,12 @@ import {
 	ProductRemarksService,
 	productSpecificationsReducer,
 	ProductSpecificationEffects,
+
 	ProductSpecificationsService
 } from '../../../core/e-commerce';
+
+import {employeeReducer,EmployeeEffects, EmployeeService} from '../../../core/employee';
+import {functionReducer,FunctionEffects,FunctionService} from '../../../core/functions';
 // Core => Utils
 import { HttpUtilsService,
 	TypesUtilsService,
@@ -91,6 +95,7 @@ import { FunctionListComponent } from './function/function-list/function-list.co
 import { FunctionEditComponent } from './function/function-edit/function-edit.component';
 import { EmployeeListComponent } from './employee/employee-list/employee-list.component';
 import { EmployeeEditComponent } from './employee/employee-edit/employee-edit.component';
+import { from } from 'rxjs';
 
 // tslint:disable-next-line:class-name
 const routes: Routes = [
@@ -129,6 +134,59 @@ const routes: Routes = [
 				path: 'section/edit/:id',
 				component: ProductEditComponent
 			},
+
+			 //function 
+			 {
+				path: 'function',
+				component: FunctionListComponent
+			  },
+			  {
+						path: 'function:id',
+						component: FunctionListComponent
+					},
+					{
+						path: 'function/add',
+						component: FunctionEditComponent
+					},
+					{
+						path: 'function/add:id',
+						component: FunctionEditComponent
+					},
+					{
+						path: 'function/edit',
+						component: FunctionEditComponent
+					},
+					{
+						path: 'function/edit/:id',
+						component: FunctionEditComponent
+			  },
+		
+			  //employee 
+			  {
+				path: 'employee',
+				component: EmployeeListComponent
+			  },
+		
+			  {
+						path: 'employee:id',
+						component: EmployeeListComponent
+					},
+					{
+						path: 'employee/add',
+						component: EmployeeEditComponent
+					},
+					{
+						path: 'employee/add:id',
+						component: EmployeeEditComponent
+					},
+					{
+						path: 'employee/edit',
+						component: EmployeeEditComponent
+					},
+					{
+						path: 'employee/edit/:id',
+						component: EmployeeEditComponent
+			  },
 		]
 	}
 ];
@@ -176,6 +234,12 @@ const routes: Routes = [
 		EffectsModule.forFeature([ProductRemarkEffects]),
 		StoreModule.forFeature('productSpecifications', productSpecificationsReducer),
 		EffectsModule.forFeature([ProductSpecificationEffects]),
+		
+		StoreModule.forFeature('employes', employeeReducer),
+		EffectsModule.forFeature([EmployeeEffects]),
+
+		StoreModule.forFeature('function', functionReducer),
+		EffectsModule.forFeature([FunctionEffects]),
 	],
 	providers: [
 		ModuleGuard,
@@ -202,7 +266,9 @@ const routes: Routes = [
 		ProductSpecificationsService,
 		ProductsService,
 		TypesUtilsService,
-		LayoutUtilsService
+		LayoutUtilsService,
+		EmployeeService,
+		FunctionService
 	],
 	entryComponents: [
 		ActionNotificationComponent,

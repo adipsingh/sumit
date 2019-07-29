@@ -7,22 +7,23 @@ import { Store, select } from '@ngrx/store';
 import { BaseDataSource, QueryResultsModel } from '../../_base/crud';
 // State
 import { AppState } from '../../reducers';
-import { selectCustomersInStore, selectCustomersPageLoading, selectCustomersShowInitWaitingMessage } from '../_selectors/precaution.selectors';
+import { selectPrecautionQAInStore, //selectPrecautionQAPageLoading, 
+	selectPrecautionQAShowInitWaitingMessage } from '../_selectors/precaution.selectors';
 
-export class CustomersDataSource extends BaseDataSource {
+export class PrecautionQADataSource extends BaseDataSource {
 	constructor(private store: Store<AppState>) {
 		super();
 
-		this.loading$ = this.store.pipe(
-			select(selectCustomersPageLoading),
-		);
+		// this.loading$ = this.store.pipe(
+		// 	select(selectPrecautionQAPageLoading),
+		// );
 
 		this.isPreloadTextViewed$ = this.store.pipe(
-			select(selectCustomersShowInitWaitingMessage)
+			select(selectPrecautionQAShowInitWaitingMessage)
 		);
 
 		this.store.pipe(
-			select(selectCustomersInStore),
+			select(selectPrecautionQAInStore),
 		).subscribe((response: QueryResultsModel) => {
 			this.paginatorTotalSubject.next(response.totalCount);
 			this.entitySubject.next(response.items);

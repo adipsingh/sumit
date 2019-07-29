@@ -5,4 +5,11 @@ export class BaseModel {
 	_userId: number = 0; // Admin
 	_createdDate: string;
 	_updatedDate: string;
+	
+		id: number;        
+        createdBy: string;
+        createdOn: string;
+        modifiedBy: string;
+        modifiedOn: string;
+        
 }
