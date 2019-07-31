@@ -9,7 +9,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { of } from 'rxjs';
 import { delay } from 'rxjs/operators';
 // Services and Models
-import { SPECIFICATIONS_DICTIONARY } from '../../../../core/e-commerce';
+import { QUESTIONS_DICTIONARY } from'../../../../core/precaution';
 
 
 @Component({
@@ -23,7 +23,7 @@ export class PrecautionEditDialogComponent implements OnInit {
 	QuestionEditForm: FormGroup;
 	viewLoading: boolean = true;
 	loadingAfterSubmit: boolean = false;
-	QuestionsDictionary: string[] = SPECIFICATIONS_DICTIONARY;
+	QuestionsDictionary: string[] = QUESTIONS_DICTIONARY;
 
 	/**
 	 * Component constructor
@@ -61,8 +61,10 @@ export class PrecautionEditDialogComponent implements OnInit {
 	initQuestionForm() {
 		// const specName: string = !this.data.id ? '' : this.QuestionsDictionary[this.data.id];
 		const question: string = this.data.question;
+		const id:number =this.data.id;
 		this.QuestionEditForm = this.fb.group({
-			text: [question, Validators.compose([
+			id:id,
+			question: [question, Validators.compose([
 				Validators.required,
 				Validators.minLength(3),
 				Validators.maxLength(100)
@@ -94,12 +96,12 @@ export class PrecautionEditDialogComponent implements OnInit {
 		this.viewLoading = true;
 
 		const id = this.getQuestionIndexByName(controls['question'].value);
-
+		const questionid = controls['id'].value;
 		const questionValue = controls['question'].value;
 		/* Server loading imitation. Remove this on real code */
 		of(undefined).pipe(delay(1000)).subscribe(() => { // Remove this line
 			this.viewLoading = false;
-			this.closeDialog(id, questionValue);
+			this.closeDialog(questionid, questionValue);
 		}); // Remove this line
 	}
 

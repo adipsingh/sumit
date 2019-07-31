@@ -33,6 +33,7 @@ import {
   MAT_CHECKBOX_CLICK_ACTION
 } from '@angular/material';
 import { FwbsDefUploadComponent } from './fwbs-def-upload/fwbs-def-upload.component';
+import { FWBSDefinationService } from '../../../../../src/app/core/fwbsdefination/_services/FWBSDefination.service';
 
 
 
@@ -67,9 +68,10 @@ import { FwbsDefUploadComponent } from './fwbs-def-upload/fwbs-def-upload.compon
     RouterModule.forChild([
 			{
 				path: '',
-				component: FwbsDefUploadComponent
+				component: FWBSDefinationComponent
 			},
 		]),
-  ]
+  ],
+  providers:[FWBSDefinationService]
 })
 export class FWBSDefinationModule { }

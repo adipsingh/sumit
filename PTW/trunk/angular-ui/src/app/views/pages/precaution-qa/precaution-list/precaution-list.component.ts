@@ -137,17 +137,17 @@ export class PrecautionListComponent implements OnInit, OnDestroy {
 			this.paginator.pageSize
 		);
 		// Call request from server
-		// 	this.store.dispatch(new PrecautionQAPageRequested({ page: queryParams }));
-		// this.selection.clear();
-		this.dataSource = new MatTableDataSource([]);
-		// this.precautionService.getAllQuestions()
-		// .subscribe((res) => {
-		// 	this.dataSource.data = [];
-		// 	const dataArray = res;
-		// 	this.dataSource.data = dataArray;
-		// 	this.dataSource= example;
-		// });
-		this.dataSource = example;
+	// 	this.store.dispatch(new PrecautionQAPageRequested({ page: queryParams }));
+    // this.selection.clear();
+	this.dataSource = new MatTableDataSource([]);
+    this.precautionService.getAllQuestions()
+	.subscribe((res) => {
+		this.dataSource.data = [];
+		const dataArray = res;
+		this.dataSource.data = dataArray;
+		//this.dataSource= example;
+	});
+	//this.dataSource= example;		
 	}
 
 	/**
@@ -239,14 +239,21 @@ export class PrecautionListComponent implements OnInit, OnDestroy {
 	editQuestion(role: PrecautionQAModel) {
 		const _saveMessage = `Question successfully has been saved.`;
 		const _messageType = role.id ? MessageType.Update : MessageType.Create;
-		const dialogRef = this.dialog.open(PrecautionEditDialogComponent, { data: { id: role.id } });
+		const dialogRef = this.dialog.open(PrecautionEditDialogComponent, { data: { id: role.id, question:role.question } });
 		dialogRef.afterClosed().subscribe(res => {
-			if (!res) {
+			if (!res.isUpdated) {
 				return;
-			}
-
+			}else{
+			this.precautionService.updateQuestion(res).subscribe(
+				result=>{
+					if (!result) {
+						return;
+					}
+				}
+			);
 			this.layoutUtilsService.showActionNotification(_saveMessage, _messageType, 10000, true, true);
 			this.loadQuestionList();
+			}
 		});
 	}
 

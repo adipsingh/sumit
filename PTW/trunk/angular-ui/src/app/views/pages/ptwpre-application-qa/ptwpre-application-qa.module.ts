@@ -25,55 +25,62 @@ import {
 	MatAutocompleteModule,
 	MAT_DIALOG_DEFAULT_OPTIONS,
 	MatSnackBarModule,
-  MatTooltipModule
+	MatTooltipModule
 } from '@angular/material';
 
 import { InterceptService, HttpUtilsService, TypesUtilsService, LayoutUtilsService } from '../../../core/_base/crud';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ActionNotificationComponent } from '../../partials/content/crud';
-//import { AddPTWTypeDialogComponent } from './add-ptwtype/add-ptwtype.dialog.component';
-//import { AddQuestionDialogComponent } from './add-question/add-question.dialog.component';
+import { AddPTWTypeDialogComponent } from './add-ptwtype/add-ptwtype.dialog.component';
+import { AddQuestionDialogComponent } from './add-question/add-question.dialog.component';
 import { PTWPreApplicationQAComponent } from './ptwpre-application-qa.component';
+import { ListComponent } from './list/list.component';
+import { PartialsModule } from '../../partials/partials.module';
+import { PTWQAService } from '../../../../../src/app/core/ptwqa';
 
 @NgModule({
-  declarations: [PTWPreApplicationQAComponent],
-  imports: [
-    CommonModule,
-      MatInputModule,
-      MatListModule,
-      MatPaginatorModule,
-      MatProgressSpinnerModule,
-      MatSortModule,
-      MatTableModule,
-      MatSelectModule,
-      MatMenuModule,
-      MatProgressBarModule,
-      MatButtonModule,
-      MatCheckboxModule,
-      MatDialogModule,
-      MatTabsModule,
-      MatNativeDateModule,
-      MatCardModule,
-      MatRadioModule,
-      MatIconModule,
-      MatDatepickerModule,
-      MatAutocompleteModule,
-      MatSnackBarModule,
-      MatTooltipModule,
-     
-    RouterModule.forChild([
-      {
-        path:'',
-        component: PTWPreApplicationQAComponent
-      },
+	declarations: [
+		PTWPreApplicationQAComponent,
+		ListComponent
+	],
+	imports: [
+		CommonModule,
+		MatInputModule,
+		MatListModule,
+		MatPaginatorModule,
+		MatProgressSpinnerModule,
+		MatSortModule,
+		MatTableModule,
+		MatSelectModule,
+		MatMenuModule,
+		MatProgressBarModule,
+		MatButtonModule,
+		MatCheckboxModule,
+		MatDialogModule,
+		MatTabsModule,
+		MatNativeDateModule,
+		MatCardModule,
+		MatRadioModule,
+		MatIconModule,
+		MatDatepickerModule,
+		MatAutocompleteModule,
+		MatSnackBarModule,
+		MatTooltipModule,
+		PartialsModule,
+		RouterModule.forChild([
+			{
+				path: '',
+				component: ListComponent
+			},
 
-    ]),
-  ],
-  providers: [
+		]),
+	],
+	providers: [
 		InterceptService,
+		PTWQAService,
 		{
-        	provide: HTTP_INTERCEPTORS,
-       	 	useClass: InterceptService,
+			provide: HTTP_INTERCEPTORS,
+			useClass: InterceptService,
 			multi: true
 		},
 		{
@@ -90,9 +97,9 @@ import { PTWPreApplicationQAComponent } from './ptwpre-application-qa.component'
 		LayoutUtilsService
 	],
 	entryComponents: [
-    ActionNotificationComponent,
-    //AddPTWTypeDialogComponent,
-    //AddQuestionDialogComponent,
+		//ActionNotificationComponent,
+		//AddPTWTypeDialogComponent,
+		//AddQuestionDialogComponent,
 	],
 })
 export class PTWPreApplicationQAModule { }

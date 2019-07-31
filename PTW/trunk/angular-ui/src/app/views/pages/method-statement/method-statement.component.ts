@@ -8,9 +8,9 @@ import { Component, OnInit } from "@angular/core";
 	styleUrls: ['method-statement.component.scss'],
 })
 export class MethodStatementComponent implements OnInit {
-    
-    
-    ngOnInit() {
-       
-    }
+
+
+	ngOnInit() {
+
+	}
 }

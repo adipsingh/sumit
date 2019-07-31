@@ -6,29 +6,28 @@ import { Observable } from 'rxjs';
 // CRUD
 import { HttpUtilsService, QueryParamsModel, QueryResultsModel } from '../../_base/crud';
 // Models
-import { PrecautionQAModel } from '../_models/precaution.model';
-import { environment } from '../../../../environments/environment.prod';
+import { CompanyModel } from '../_models/company.model';
 
-const API_PRECAUTIONQA_URL = 'precaution';
+const API_QUESTIONS_URL = 'api/companys';
 
 @Injectable()
-export class PrecautionQAService {
+export class CompanyService {
 	constructor(private http: HttpClient, private httpUtils: HttpUtilsService) { }
 
-	// CREATE =>  POST: add a new customer to the server
-	createPrecautionQA(customer: PrecautionQAModel): Observable<PrecautionQAModel> {
+	// CREATE =>  POST: add a new Question to the server
+	createQuestion(question: CompanyModel): Observable<CompanyModel> {
 		// Note: Add headers if needed (tokens/bearer)
 		const httpHeaders = this.httpUtils.getHTTPHeaders();
-		return this.http.post<PrecautionQAModel>(API_PRECAUTIONQA_URL, customer, { headers: httpHeaders});
+		return this.http.post<CompanyModel>(API_QUESTIONS_URL, question, { headers: httpHeaders});
 	}
 
 	// READ
-	getAllQuestions(): Observable<PrecautionQAModel[]> {
-		return this.http.get<PrecautionQAModel[]>(environment.baseUrl+ API_PRECAUTIONQA_URL+`/All`);
-		
+	getAllCompanys(): Observable<CompanyModel[]> {
+		return this.http.get<CompanyModel[]>(API_QUESTIONS_URL);
 	}
-	getQuestionById(customerId: number): Observable<PrecautionQAModel> {
-		return this.http.get<PrecautionQAModel>(environment.baseUrl+ API_PRECAUTIONQA_URL + `/${customerId}`);
+
+	getQuestionById(questionId: number): Observable<CompanyModel> {
+		return this.http.get<CompanyModel>(API_QUESTIONS_URL + `/${questionId}`);
 	}
 
 	// Method from server should return QueryResultsModel(items: any[], totalsCount: number)
@@ -39,7 +38,7 @@ export class PrecautionQAService {
 		const httpHeaders = this.httpUtils.getHTTPHeaders();
 		const httpParams = this.httpUtils.getFindHTTPParams(queryParams);
 
-		const url =API_PRECAUTIONQA_URL + '/find';
+		const url = API_QUESTIONS_URL + '/find';
 		return this.http.get<QueryResultsModel>(url, {
 			headers: httpHeaders,
 			params:  httpParams
@@ -47,33 +46,32 @@ export class PrecautionQAService {
 	}
 
 	// UPDATE => PUT: update the Question on the server
-	updateQuestion(question: PrecautionQAModel): Observable<any> {
+	updateQuestion(question: CompanyModel): Observable<any> {
 		const httpHeader = this.httpUtils.getHTTPHeaders();
-		const url=environment.baseUrl+API_PRECAUTIONQA_URL +'/update/'+question.id;
-		return this.http.post(url, {Question: question.question}, { headers: httpHeader });
+		return this.http.put(API_QUESTIONS_URL, question, { headers: httpHeader });
 	}
 
 	// UPDATE Status
-	updateStatusForQuestion(customers: PrecautionQAModel[], status: number): Observable<any> {
+	updateStatusForQuestion(questions: CompanyModel[], status: number): Observable<any> {
 		const httpHeaders = this.httpUtils.getHTTPHeaders();
 		const body = {
-			customersForUpdate: customers,
+			QuestionsForUpdate: questions,
 			newStatus: status
 		};
-		const url = API_PRECAUTIONQA_URL + '/updateStatus';
+		const url = API_QUESTIONS_URL + '/updateStatus';
 		return this.http.put(url, body, { headers: httpHeaders });
 	}
 
 	// DELETE => delete the Question from the server
-	deleteQuestion(customerId: number): Observable<PrecautionQAModel> {
-		const url = environment.baseUrl+API_PRECAUTIONQA_URL+`/delete/${customerId}`;
-		return this.http.post<PrecautionQAModel>(url,null);
+	deleteQuestion(questionId: number): Observable<CompanyModel> {
+		const url = `${API_QUESTIONS_URL}/${questionId}`;
+		return this.http.delete<CompanyModel>(url);
 	}
 
 	deleteQuestions(ids: number[] = []): Observable<any> {
-		const url = API_PRECAUTIONQA_URL + '/deleteCustomers';
+		const url = API_QUESTIONS_URL + '/deleteQuestions';
 		const httpHeaders = this.httpUtils.getHTTPHeaders();
-		const body = { customerIdsForDelete: ids };
+		const body = { QuestionIdsForDelete: ids };
 		return this.http.put<QueryResultsModel>(url, body, { headers: httpHeaders} );
 	}
 }

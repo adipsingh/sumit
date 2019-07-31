@@ -6,7 +6,7 @@ export { PrecautionQAModel } from './_models/precaution.model';
 
 
 
-export { SPECIFICATIONS_DICTIONARY } from './_consts/specification.dictionary';
+export { QUESTIONS_DICTIONARY } from './_consts/questionS.dictionary';
 
 // DataSources
 export { PrecautionQADataSource } from './_data-sources/precaution.datasource';

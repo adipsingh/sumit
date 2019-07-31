@@ -12,12 +12,12 @@ import { EditComponent } from '../edit/edit.component';
 
 
 @Component({
-  selector: 'kt-list',
-  templateUrl: './list.component.html'
-  //styleUrls: ['./list.component.scss']
+	selector: 'kt-list',
+	templateUrl: './list.component.html'
+	//styleUrls: ['./list.component.scss']
 })
 export class ListComponent implements OnInit {
-  dataSource: PTWQADataSource;
+	dataSource: PTWQADataSource;
 	displayedColumns = ['select', 'id', 'questions', 'Cold', 'Hot', 'actions'];
 	@ViewChild(MatPaginator) paginator: MatPaginator;
 	@ViewChild('sort1') sort: MatSort;
@@ -33,29 +33,30 @@ export class ListComponent implements OnInit {
 	// Subscriptions
 	private subscriptions: Subscription[] = [];
 	constructor(
-		public ptw:PTWQAService,
-    	public dialog: MatDialog,
+		private ptw: PTWQAService,
+		public dialog: MatDialog,
 		public snackBar: MatSnackBar,
 		private layoutUtilsService: LayoutUtilsService,
 		private translate: TranslateService,
 		private store: Store<AppState>) { }
-    
-    ngOnInit() {
+
+	ngOnInit() {
+
 		// If the user changes the sort order, reset back to the first page.
 		const sortSubscription = this.sort.sortChange.subscribe(() => (this.paginator.pageIndex = 0));
-    	this.subscriptions.push(sortSubscription);
+		this.subscriptions.push(sortSubscription);
 
 		/* Data load will be triggered in two cases:
 		- when a pagination event occurs => this.paginator.page
 		- when a sort event occurs => this.sort.sortChange
 		**/
-    	const paginatorSubscriptions = merge(this.sort.sortChange, this.paginator.page).pipe(
-		tap(() => this.loadQuestionsList())
+		const paginatorSubscriptions = merge(this.sort.sortChange, this.paginator.page).pipe(
+			tap(() => this.loadQuestionsList())
 		)
-		.subscribe();
-    	this.subscriptions.push(paginatorSubscriptions);  		 
-    
-    // Init DataSource
+			.subscribe();
+		this.subscriptions.push(paginatorSubscriptions);
+
+		// Init DataSource
 		this.dataSource = new PTWQADataSource(this.store);
 		const entitiesSubscription = this.dataSource.entitySubject.pipe(
 			skip(1),
@@ -63,39 +64,38 @@ export class ListComponent implements OnInit {
 		).subscribe(res => {
 			this.questionResult = res;
 		});
-    this.subscriptions.push(entitiesSubscription);
-    of(undefined).pipe(take(1), delay(1000)).subscribe(() => { // Remove this line, just loading imitation
+		this.subscriptions.push(entitiesSubscription);
+		of(undefined).pipe(take(1), delay(1000)).subscribe(() => { // Remove this line, just loading imitation
 			this.loadQuestionsList();
 		}); // Remove this line, just loading imitation
-    }
-	
+	}
 
-	ngOnDestroy(){
+
+	ngOnDestroy() {
 		this.subscriptions.forEach(el => el.unsubscribe());
 	}
-	
-	loadQuestionsList() {		
+
+	loadQuestionsList() {
 		this.selection.clear();
 		const queryParams = new QueryParamsModel(
-		this.filterConfiguration(),
-		this.sort.direction,
-		this.sort.active,
-		this.paginator.pageIndex,
-		this.paginator.pageSize
-	);
-
-	this.ptw.getAllQuestions(queryParams) // this is for real 
-
-	.subscribe(response => 
-		{ 		
-			this.questionResult = response.items;
-		}, 
-		err => console.log(err), ()=> console.log(this.questionResult)
+			this.filterConfiguration(),
+			this.sort.direction,
+			this.sort.active,
+			this.paginator.pageIndex,
+			this.paginator.pageSize
 		);
 
-	this.store.dispatch(new QuestionsPageRequested({ page: queryParams }));
-	this.selection.clear();	
-}
+		this.ptw.getAllQuestions(queryParams) // this is for real 
+
+			.subscribe(response => {
+				this.questionResult = response.items;
+			},
+				err => console.log(err), () => console.log(this.questionResult)
+			);
+
+		this.store.dispatch(new QuestionsPageRequested({ page: queryParams }));
+		this.selection.clear();
+	}
 
 	filterConfiguration(): any {
 		const filter: any = {};
@@ -151,7 +151,7 @@ export class ListComponent implements OnInit {
 		this.selection.selected.forEach(elem => {
 			messages.push({
 				text: `${elem.questions}`,
-				id: elem.id.toString()				
+				id: elem.id.toString()
 			});
 		});
 		this.layoutUtilsService.fetchElements(messages);
@@ -164,8 +164,8 @@ export class ListComponent implements OnInit {
 	}
 
 	//chnage edit component once PTWQA edit component created
-  editQuestion(newQuestion: PTWQAModel) {
-    let saveMessageTranslateParam = 'CERTIFICATEQA.QUESTIONS.EDIT.';
+	editQuestion(newQuestion: PTWQAModel) {
+		let saveMessageTranslateParam = 'CERTIFICATEQA.QUESTIONS.EDIT.';
 		saveMessageTranslateParam += newQuestion.id > 0 ? 'UPDATE_MESSAGE' : 'ADD_MESSAGE';
 		const _saveMessage = this.translate.instant(saveMessageTranslateParam);
 		const _messageType = newQuestion.id > 0 ? MessageType.Update : MessageType.Create;
@@ -178,5 +178,5 @@ export class ListComponent implements OnInit {
 			this.layoutUtilsService.showActionNotification(_saveMessage, _messageType);
 			this.loadQuestionsList();
 		});
-  }
+	}
 }
